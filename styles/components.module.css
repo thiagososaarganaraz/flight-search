@@ -1,0 +1,144 @@
+/* Theme Toggle Styles */
+.themeToggle {
+  @apply relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  background-color: var(--toggle-bg);
+}
+
+.themeToggle[data-enabled="true"] {
+  @apply bg-blue-600;
+}
+
+.themeToggle[data-enabled="false"] {
+  @apply bg-gray-200 dark:bg-gray-700;
+}
+
+.themeToggleButton {
+  @apply inline-block h-4 w-4 transform rounded-full bg-white transition-transform;
+}
+
+.themeToggleButton[data-enabled="true"] {
+  @apply translate-x-6;
+}
+
+.themeToggleButton[data-enabled="false"] {
+  @apply translate-x-1;
+}
+
+/* Autocomplete Styles */
+.autocompleteContainer {
+  @apply relative w-full;
+}
+
+.autocompleteInput {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:border-blue-400;
+}
+
+.autocompleteDropdown {
+  @apply absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg max-h-60 overflow-auto;
+}
+
+.autocompleteSuggestion {
+  @apply px-4 py-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-700 last:border-b-0;
+}
+
+.autocompleteSuggestion:focus {
+  @apply bg-blue-50 dark:bg-blue-900 outline-none;
+}
+
+.suggestionCode {
+  @apply font-bold text-blue-600 dark:text-blue-400;
+}
+
+.suggestionName {
+  @apply text-gray-900 dark:text-gray-100 font-medium;
+}
+
+.suggestionLocation {
+  @apply text-gray-500 dark:text-gray-400 text-sm;
+}
+
+/* Loading Animation */
+.loadingDots {
+  @apply inline-flex space-x-1;
+}
+
+.loadingDot {
+  @apply w-2 h-2 bg-gray-400 rounded-full animate-pulse;
+}
+
+.loadingDot:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.loadingDot:nth-child(2) {
+  animation-delay: 150ms;
+}
+
+.loadingDot:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+/* Flight Card Enhancements */
+.flightCard {
+  @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm hover:shadow-md transition-all duration-200;
+}
+
+.flightCard:hover {
+  @apply border-blue-300 dark:border-blue-600;
+}
+
+.airlineIcon {
+  @apply w-8 h-8 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-800 dark:to-blue-900 rounded-full flex items-center justify-center;
+}
+
+.routeLine {
+  @apply relative flex-1 h-px bg-gray-300 dark:bg-gray-600;
+}
+
+.routeDot {
+  @apply absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full;
+}
+
+/* Responsive Utilities */
+.mobileStack {
+  @apply flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4;
+}
+
+.mobileCenter {
+  @apply text-center lg:text-left;
+}
+
+/* Accessibility Enhancements */
+.srOnly {
+  @apply sr-only;
+}
+
+.focusVisible {
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-blue-400;
+}
+
+/* Error State Styles */
+.errorContainer {
+  @apply bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4;
+}
+
+.errorIcon {
+  @apply text-red-500 dark:text-red-400;
+}
+
+.errorText {
+  @apply text-red-700 dark:text-red-300;
+}
+
+/* Success State Styles */
+.successContainer {
+  @apply bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4;
+}
+
+.successIcon {
+  @apply text-green-500 dark:text-green-400;
+}
+
+.successText {
+  @apply text-green-700 dark:text-green-300;
+}
