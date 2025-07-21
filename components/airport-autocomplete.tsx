@@ -4,7 +4,7 @@ import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { useAirportSearch, type Airport } from "@/hooks/use-airport-search"
 import { MapPin, Loader2 } from "lucide-react"
-import styles from "@/styles/components.module.css"
+import styles from "./airport-autocomplete.module.css"
 
 interface AirportAutocompleteProps {
   value: string

@@ -2,7 +2,7 @@
 
 import { useTheme } from "@/contexts/theme-context"
 import { Moon, Sun } from "lucide-react"
-import styles from "@/styles/components.module.css"
+import styles from "./theme-toggle.module.css"
 
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme()

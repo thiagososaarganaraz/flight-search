@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { AlertCircle, RefreshCw, Clock, Shield } from "lucide-react"
 import type { ApiError } from "@/types/flight"
-import styles from "@/styles/components.module.css"
+import styles from "./error-state.module.css"
 
 interface ErrorStateProps {
   error: ApiError

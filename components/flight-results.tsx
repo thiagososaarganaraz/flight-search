@@ -5,6 +5,7 @@ import { FlightCard } from "./flight-card"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Plane } from "lucide-react"
+import styles from "./flight-results.module.css"
 
 interface FlightResultsProps {
   results: FlightSearchResponse
@@ -15,26 +16,26 @@ export function FlightResults({ results, onFlightSelect }: FlightResultsProps) {
   if (!results.flights.length) {
     return (
       <Card className="w-full max-w-4xl mx-auto">
-        <CardContent className="p-8 text-center">
-          <Plane className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-          <h3 className="text-lg font-semibold mb-2">No flights found</h3>
-          <p className="text-muted-foreground">Try adjusting your search criteria or dates to find more options.</p>
+        <CardContent className={styles.noResults}>
+          <Plane className={styles.noResultsIcon} />
+          <h3 className={styles.noResultsTitle}>No flights found</h3>
+          <p className={styles.noResultsText}>Try adjusting your search criteria or dates to find more options.</p>
         </CardContent>
       </Card>
     )
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-4">
+    <div className={styles.resultsContainer}>
       {/* Results Header */}
-      <Card>
+      <Card className={styles.resultsHeader}>
         <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <span className="flex items-center gap-2">
+          <CardTitle className={styles.resultsTitle}>
+            <span className={styles.resultsTitleText}>
               <Plane className="h-5 w-5" />
               Flight Results
             </span>
-            <Badge variant="secondary">
+            <Badge variant="secondary" className={styles.resultsCount}>
               {results.totalResults} flight{results.totalResults !== 1 ? "s" : ""} found
             </Badge>
           </CardTitle>
@@ -42,7 +43,7 @@ export function FlightResults({ results, onFlightSelect }: FlightResultsProps) {
       </Card>
 
       {/* Flight Cards */}
-      <div className="space-y-3">
+      <div className={styles.flightsList}>
         {results.flights.map((flight) => (
           <FlightCard key={flight.id} flight={flight} onSelect={onFlightSelect} />
         ))}

@@ -1,0 +1,170 @@
+/* Autocomplete Styles */
+.autocompleteContainer {
+  position: relative;
+  width: 100%;
+}
+
+.autocompleteInput {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  background-color: white;
+  color: #111827;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.autocompleteInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.dark .autocompleteInput {
+  border-color: #4b5563;
+  background-color: #1f2937;
+  color: white;
+}
+
+.dark .autocompleteInput:focus {
+  border-color: #60a5fa;
+}
+
+.autocompleteDropdown {
+  position: absolute;
+  z-index: 50;
+  width: 100%;
+  margin-top: 0.25rem;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  max-height: 15rem;
+  overflow: auto;
+  animation: slideDown 0.2s ease-out;
+}
+
+.dark .autocompleteDropdown {
+  background-color: #1f2937;
+  border-color: #4b5563;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.autocompleteSuggestion {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.autocompleteSuggestion:last-child {
+  border-bottom: none;
+}
+
+.autocompleteSuggestion:hover {
+  background-color: #f9fafb;
+}
+
+.dark .autocompleteSuggestion {
+  border-bottom-color: #374151;
+}
+
+.dark .autocompleteSuggestion:hover {
+  background-color: #374151;
+}
+
+.autocompleteSuggestion:focus {
+  background-color: #eff6ff;
+  outline: none;
+}
+
+.dark .autocompleteSuggestion:focus {
+  background-color: #1e3a8a;
+}
+
+.suggestionCode {
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.dark .suggestionCode {
+  color: #60a5fa;
+}
+
+.suggestionName {
+  color: #111827;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+.dark .suggestionName {
+  color: #f9fafb;
+}
+
+.suggestionLocation {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-top: 0.125rem;
+}
+
+.dark .suggestionLocation {
+  color: #9ca3af;
+}
+
+/* Loading Animation */
+.loadingDots {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+.loadingDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #9ca3af;
+  border-radius: 9999px;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.loadingDot:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.loadingDot:nth-child(2) {
+  animation-delay: 150ms;
+}
+
+.loadingDot:nth-child(3) {
+  animation-delay: 300ms;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.focusVisible:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6, 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.dark .focusVisible:focus-visible {
+  box-shadow: 0 0 0 2px #60a5fa, 0 0 0 4px rgba(96, 165, 250, 0.1);
+}

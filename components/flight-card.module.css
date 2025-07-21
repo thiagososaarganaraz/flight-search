@@ -1,0 +1,96 @@
+/* Flight Card Styles */
+.flightCard {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.flightCard:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-color: #93c5fd;
+}
+
+.dark .flightCard {
+  background-color: #1f2937;
+  border-color: #374151;
+}
+
+.dark .flightCard:hover {
+  border-color: #2563eb;
+}
+
+.airlineIcon {
+  width: 2rem;
+  height: 2rem;
+  background: linear-gradient(to bottom right, #dbeafe, #bfdbfe);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark .airlineIcon {
+  background: linear-gradient(to bottom right, #1e3a8a, #1e40af);
+}
+
+.routeLine {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  background-color: #d1d5db;
+}
+
+.dark .routeLine {
+  background-color: #4b5563;
+}
+
+.routeDot {
+  position: absolute;
+  top: -0.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #9ca3af;
+  border-radius: 9999px;
+}
+
+.dark .routeDot {
+  background-color: #6b7280;
+}
+
+/* Responsive Utilities */
+.mobileStack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .mobileStack {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.mobileCenter {
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .mobileCenter {
+    text-align: left;
+  }
+}
+
+.focusVisible:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6, 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.dark .focusVisible:focus-visible {
+  box-shadow: 0 0 0 2px #60a5fa, 0 0 0 4px rgba(96, 165, 250, 0.1);
+}
