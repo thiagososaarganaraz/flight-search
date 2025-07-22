@@ -1,7 +1,5 @@
 "use client"
 import React from "react"
-import { format } from "date-fns"
-import TextField from "@mui/material/TextField"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { DatePicker as MUIDatePicker } from "@mui/x-date-pickers/DatePicker"
@@ -31,6 +29,9 @@ export function DatePicker({ date, onDateChange, placeholder = "Pick a date", di
             placeholder,
             variant: "outlined",
             size: "small",
+            InputProps: {
+              style: { color: "inherit" },
+            },
           },
         }}
       />

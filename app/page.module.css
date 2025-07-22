@@ -17,6 +17,22 @@
   padding: 1rem;
 }
 
+.formHeader {
+  padding: 1.5rem;
+  transition: border-color 0.3s ease;
+  margin: 0 auto;
+}
+
+.formTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--card-foreground);
+  transition: color 0.3s ease;
+}
+
 @media (min-width: 640px) {
   .headerContent {
     padding: 1rem 1.5rem;

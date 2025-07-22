@@ -45,6 +45,11 @@ export default function HomePage() {
       {/* Main Content */}
       <main className={styles.main}>
         <div className={styles.mainContent}>
+          <div className={styles.formHeader}>
+            <h2 className={styles.formTitle}>
+              Flights
+            </h2>
+          </div>
           {/* Search Form */}
           <FlightSearchForm onSearch={handleSearch} loading={loading} />
 

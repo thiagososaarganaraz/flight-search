@@ -54,12 +54,6 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
 
   return (
     <div className={styles.searchFormCard}>
-      <div className={styles.formHeader}>
-        <h2 className={styles.formTitle}>
-          <Plane className={styles.formTitleIcon} />
-          Search Flights
-        </h2>
-      </div>
       <div className={styles.formContent}>
         <form onSubmit={handleSubmit} className={styles.formSection}>
           {/* Trip Type */}
