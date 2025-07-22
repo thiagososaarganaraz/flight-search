@@ -25,12 +25,13 @@ export function AirportAutocomplete({
 }: AirportAutocompleteProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(-1)
-  const { query, setQuery, suggestions, isLoading } = useAirportSearch()
+  const { query, setQuery, suggestions, isLoading, error } = useAirportSearch()
   const inputRef = useRef<HTMLInputElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setQuery(value)
+    console.log(suggestions);
   }, [value, setQuery])
 
   useEffect(() => {
@@ -98,7 +99,7 @@ export function AirportAutocomplete({
     }
   }
 
-  const shouldShowDropdown = isOpen && (suggestions.length > 0 || isLoading)
+  const shouldShowDropdown = isOpen && (suggestions.length > 0 || isLoading || error)
 
   return (
     <div className={styles.autocompleteContainer}>
@@ -148,6 +149,8 @@ export function AirportAutocomplete({
               </div>
               <span className={styles.loadingText}>Searching airports...</span>
             </div>
+          ) : error ? (
+            <div className={styles.error}>{error}</div>
           ) : suggestions.length > 0 ? (
             suggestions.map((airport, index) => (
               <div
@@ -170,8 +173,8 @@ export function AirportAutocomplete({
               >
                 <div className={styles.suggestionContent}>
                   <div className={styles.suggestionInfo}>
-                    <span className={styles.suggestionCode}>{airport.code}</span>
-                    <div className={styles.suggestionName}>{airport.name}</div>
+                    <span className={styles.suggestionCode}>{airport?.code}</span>
+                    <div className={styles.suggestionName}>{airport?.name}</div>
                     <div className={styles.suggestionLocation}>
                       {airport.city}, {airport.country}
                     </div>
