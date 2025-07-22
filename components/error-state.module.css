@@ -1,0 +1,102 @@
+.errorCard {
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dark .errorCard {
+  background-color: #1f2937;
+  border-color: #374151;
+}
+
+.errorContent {
+  padding: 2rem;
+  text-align: center;
+}
+
+.errorContainer {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.dark .errorContainer {
+  background-color: rgba(127, 29, 29, 0.2);
+  border-color: #991b1b;
+}
+
+.errorIconContainer {
+  margin-bottom: 1rem;
+}
+
+.errorIcon {
+  height: 3rem;
+  width: 3rem;
+  margin: 0 auto;
+  color: #ef4444;
+}
+
+.errorIconYellow {
+  color: #eab308;
+}
+
+.errorIconOrange {
+  color: #f97316;
+}
+
+.dark .errorIcon {
+  color: #f87171;
+}
+
+.errorTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #111827;
+}
+
+.dark .errorTitle {
+  color: #f9fafb;
+}
+
+.errorText {
+  color: #b91c1c;
+  margin-bottom: 1.5rem;
+}
+
+.dark .errorText {
+  color: #fca5a5;
+}
+
+.retryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.retryButton:hover {
+  background-color: #2563eb;
+}
+
+.retryButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.retryButtonIcon {
+  height: 1rem;
+  width: 1rem;
+}

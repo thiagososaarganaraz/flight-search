@@ -1,41 +1,40 @@
 "use client"
-import { format } from "date-fns"
+import React from "react"
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
+import { DatePicker as MUIDatePicker } from "@mui/x-date-pickers/DatePicker"
 import { CalendarIcon } from "lucide-react"
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-
 interface DatePickerProps {
-  date?: Date
-  onDateChange?: (date: Date | undefined) => void
+  date?: Date | null
+  onDateChange?: (date: Date | null) => void
   placeholder?: string
   disabled?: boolean
 }
 
 export function DatePicker({ date, onDateChange, placeholder = "Pick a date", disabled }: DatePickerProps) {
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
-          className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground")}
-          disabled={disabled}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>{placeholder}</span>}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={onDateChange}
-          initialFocus
-          disabled={(date) => date < new Date()}
-        />
-      </PopoverContent>
-    </Popover>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <MUIDatePicker
+        value={date || null}
+        onChange={onDateChange}
+        disabled={disabled}
+        minDate={new Date()}
+        slots={{
+          openPickerIcon: CalendarIcon,
+        }}
+        slotProps={{
+          textField: {
+            fullWidth: true,
+            placeholder,
+            variant: "outlined",
+            size: "small",
+            InputProps: {
+              style: { color: "inherit"},
+            },
+          },
+        }}
+      />
+    </LocalizationProvider>
   )
 }

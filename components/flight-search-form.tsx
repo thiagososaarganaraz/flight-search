@@ -1,17 +1,13 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { DatePicker } from "@/components/ui/date-picker"
 import type { FlightSearchParams } from "@/types/flight"
 import { Plane, Users, Calendar } from "lucide-react"
 import { format } from "date-fns"
 import { AirportAutocomplete } from "./airport-autocomplete"
+import styles from "./flight-search-form.module.css"
 
 interface FlightSearchFormProps {
   onSearch: (params: FlightSearchParams) => void
@@ -29,8 +25,8 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
     tripType: "round_trip",
   })
 
-  const [departureDate, setDepartureDate] = useState<Date>()
-  const [returnDate, setReturnDate] = useState<Date>()
+  const [departureDate, setDepartureDate] = useState<Date | null>(null)
+  const [returnDate, setReturnDate] = useState<Date | null>(null)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -57,18 +53,12 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
   const totalPassengers = (formData.adults || 0) + (formData.children || 0) + (formData.infants || 0)
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Plane className="h-5 w-5" />
-          Search Flights
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
+    <div className={styles.searchFormCard}>
+      <div className={styles.formContent}>
+        <form onSubmit={handleSubmit} className={styles.formSection}>
           {/* Trip Type */}
-          <div className="flex gap-4">
-            <div className="flex items-center space-x-2">
+          <div className={styles.tripTypeSection}>
+            <div className={styles.radioGroup}>
               <input
                 type="radio"
                 id="round-trip"
@@ -76,11 +66,13 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
                 value="round_trip"
                 checked={formData.tripType === "round_trip"}
                 onChange={(e) => setFormData((prev) => ({ ...prev, tripType: e.target.value as "round_trip" }))}
-                className="w-4 h-4"
+                className={styles.radioInput}
               />
-              <Label htmlFor="round-trip">Round trip</Label>
+              <label htmlFor="round-trip" className={styles.radioLabel}>
+                Round trip
+              </label>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className={styles.radioGroup}>
               <input
                 type="radio"
                 id="one-way"
@@ -88,14 +80,16 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
                 value="one_way"
                 checked={formData.tripType === "one_way"}
                 onChange={(e) => setFormData((prev) => ({ ...prev, tripType: e.target.value as "one_way" }))}
-                className="w-4 h-4"
+                className={styles.radioInput}
               />
-              <Label htmlFor="one-way">One way</Label>
+              <label htmlFor="one-way" className={styles.radioLabel}>
+                One way
+              </label>
             </div>
           </div>
 
           {/* Origin and Destination */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className={styles.inputGrid}>
             <AirportAutocomplete
               value={formData.origin || ""}
               onChange={(value) => setFormData((prev) => ({ ...prev, origin: value }))}
@@ -115,126 +109,125 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
           </div>
 
           {/* Dates */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
+          <div className={styles.inputGrid}>
+            <div className={styles.inputGroup}>
+              <label className={styles.inputLabel}>
+                <Calendar className={styles.labelIcon} />
                 Departure
-              </Label>
-              <DatePicker date={departureDate} onDateChange={setDepartureDate} placeholder="Select departure date" />
+              </label>
+              <DatePicker 
+                date={departureDate}
+                onDateChange={setDepartureDate}
+                placeholder="Select departure date"
+                disabled={loading}
+              />
             </div>
             {formData.tripType === "round_trip" && (
-              <div className="space-y-2">
-                <Label className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
+              <div className={styles.inputGroup}>
+                <label className={styles.inputLabel}>
+                  <Calendar className={styles.labelIcon} />
                   Return
-                </Label>
-                <DatePicker date={returnDate} onDateChange={setReturnDate} placeholder="Select return date" />
+                </label>
+                <DatePicker 
+                  date={returnDate}
+                  onDateChange={setReturnDate}
+                  placeholder="Select return date"
+                  disabled={loading}
+                />
               </div>
             )}
           </div>
 
           {/* Passengers and Class */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
+          <div className={styles.inputGrid}>
+            <div className={styles.passengersSection}>
+              <label className={styles.passengersLabel}>
+                <Users className={styles.labelIcon} />
                 Passengers
-              </Label>
-              <div className="grid grid-cols-3 gap-2">
-                <div>
-                  <Label htmlFor="adults" className="text-xs">
+              </label>
+              <div className={styles.passengersGrid}>
+                <div className={styles.passengerGroup}>
+                  <label htmlFor="adults" className={styles.passengerLabel}>
                     Adults
-                  </Label>
-                  <Select
+                  </label>
+                  <select
+                    id="adults"
                     value={formData.adults?.toString()}
-                    onValueChange={(value) => setFormData((prev) => ({ ...prev, adults: Number.parseInt(value) }))}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, adults: Number.parseInt(e.target.value) }))}
+                    className={styles.selectInput}
                   >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {[1, 2, 3, 4, 5, 6].map((num) => (
-                        <SelectItem key={num} value={num.toString()}>
-                          {num}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    {[1, 2, 3, 4, 5, 6].map((num) => (
+                      <option key={num} value={num.toString()}>
+                        {num}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <div>
-                  <Label htmlFor="children" className="text-xs">
+                <div className={styles.passengerGroup}>
+                  <label htmlFor="children" className={styles.passengerLabel}>
                     Children
-                  </Label>
-                  <Select
+                  </label>
+                  <select
+                    id="children"
                     value={formData.children?.toString()}
-                    onValueChange={(value) => setFormData((prev) => ({ ...prev, children: Number.parseInt(value) }))}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, children: Number.parseInt(e.target.value) }))}
+                    className={styles.selectInput}
                   >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {[0, 1, 2, 3, 4].map((num) => (
-                        <SelectItem key={num} value={num.toString()}>
-                          {num}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    {[0, 1, 2, 3, 4].map((num) => (
+                      <option key={num} value={num.toString()}>
+                        {num}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <div>
-                  <Label htmlFor="infants" className="text-xs">
+                <div className={styles.passengerGroup}>
+                  <label htmlFor="infants" className={styles.passengerLabel}>
                     Infants
-                  </Label>
-                  <Select
+                  </label>
+                  <select
+                    id="infants"
                     value={formData.infants?.toString()}
-                    onValueChange={(value) => setFormData((prev) => ({ ...prev, infants: Number.parseInt(value) }))}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, infants: Number.parseInt(e.target.value) }))}
+                    className={styles.selectInput}
                   >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {[0, 1, 2].map((num) => (
-                        <SelectItem key={num} value={num.toString()}>
-                          {num}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    {[0, 1, 2].map((num) => (
+                      <option key={num} value={num.toString()}>
+                        {num}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="class">Class</Label>
-              <Select
+            <div className={styles.classSection}>
+              <label htmlFor="class" className={styles.classLabel}>
+                Class
+              </label>
+              <select
+                id="class"
                 value={formData.cabinClass}
-                onValueChange={(value) => setFormData((prev) => ({ ...prev, cabinClass: value as any }))}
+                onChange={(e) => setFormData((prev) => ({ ...prev, cabinClass: e.target.value as any }))}
+                className={styles.selectInput}
               >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="economy">Economy</SelectItem>
-                  <SelectItem value="premium_economy">Premium Economy</SelectItem>
-                  <SelectItem value="business">Business</SelectItem>
-                  <SelectItem value="first">First Class</SelectItem>
-                </SelectContent>
-              </Select>
+                <option value="economy">Economy</option>
+                <option value="premium_economy">Premium Economy</option>
+                <option value="business">Business</option>
+                <option value="first">First Class</option>
+              </select>
             </div>
           </div>
 
-          <Button
+          <button
             type="submit"
-            className="w-full"
-            size="lg"
+            className={styles.submitButton}
             disabled={loading || !formData.origin || !formData.destination || !departureDate}
           >
             {loading
               ? "Searching..."
               : `Search Flights (${totalPassengers} passenger${totalPassengers !== 1 ? "s" : ""})`}
-          </Button>
+          </button>
         </form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }

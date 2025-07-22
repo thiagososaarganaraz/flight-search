@@ -2,50 +2,113 @@
 
 import type { FlightSearchResponse } from "@/types/flight"
 import { FlightCard } from "./flight-card"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Plane } from "lucide-react"
+import { Plane, Calendar } from "lucide-react"
+import styles from "./flight-results.module.css"
 
-interface FlightResultsProps {
-  results: FlightSearchResponse
-  onFlightSelect?: (flight: any) => void
+interface AlternativeFlightResult {
+  date: string;
+  results: FlightSearchResponse;
 }
 
-export function FlightResults({ results, onFlightSelect }: FlightResultsProps) {
-  if (!results.flights.length) {
+interface FlightResultsProps {
+  results: FlightSearchResponse | AlternativeFlightResult[];
+  originalDate?: string;
+  onFlightSelect?: (flight: any) => void;
+  showDateHeaders?: boolean;
+}
+
+export function FlightResults({ 
+  results, 
+  originalDate, 
+  onFlightSelect, 
+  showDateHeaders = false 
+}: FlightResultsProps) {
+  // Check if we're showing alternative dates (array of results)
+  const isAlternativeResults = Array.isArray(results);
+  
+  // Handle no results case
+  if ((!isAlternativeResults && !results?.flights?.length) || 
+      (isAlternativeResults && results.length === 0)) {
     return (
-      <Card className="w-full max-w-4xl mx-auto">
-        <CardContent className="p-8 text-center">
-          <Plane className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-          <h3 className="text-lg font-semibold mb-2">No flights found</h3>
-          <p className="text-muted-foreground">Try adjusting your search criteria or dates to find more options.</p>
-        </CardContent>
-      </Card>
+      <div className={styles.noResultsCard}>
+        <div className={styles.noResults}>
+          <Plane className={styles.noResultsIcon} />
+          <h3 className={styles.noResultsTitle}>No flights found</h3>
+          <p className={styles.noResultsText}>
+            {originalDate ? `No flights available for ${originalDate}. ` : ''}
+            Try adjusting your search criteria or dates to find more options.
+          </p>
+        </div>
+      </div>
     )
   }
 
-  return (
-    <div className="w-full max-w-4xl mx-auto space-y-4">
-      {/* Results Header */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <span className="flex items-center gap-2">
-              <Plane className="h-5 w-5" />
-              Flight Results
-            </span>
-            <Badge variant="secondary">
-              {results.totalResults} flight{results.totalResults !== 1 ? "s" : ""} found
-            </Badge>
-          </CardTitle>
-        </CardHeader>
-      </Card>
+  // Single result set case
+  if (!isAlternativeResults) {
+    return (
+      <div className={styles.resultsContainer}>
+        <ResultsHeader 
+          date={originalDate}
+          totalResults={results.totalResults} 
+        />
+        <div className={styles.flightsList}>
+          {results.flights.map((flight) => (
+            <FlightCard key={flight.id} flight={flight} onSelect={onFlightSelect} />
+          ))}
+        </div>
+      </div>
+    )
+  }
 
-      {/* Flight Cards */}
-      <div className="space-y-3">
-        {results.flights.map((flight) => (
-          <FlightCard key={flight.id} flight={flight} onSelect={onFlightSelect} />
-        ))}
+  // Multiple result sets (alternative dates) case
+  return (
+    <div className={styles.resultsContainer}>
+      {originalDate && (
+        <div className={styles.alternativeDatesNote}>
+          <Calendar className={styles.calendarIcon} />
+          Showing alternatives for {originalDate}
+        </div>
+      )}
+      
+      {results.map(({ date, results: resultSet }) => (
+        <div key={date} className={styles.dateGroup}>
+          {showDateHeaders && (
+            <ResultsHeader 
+              date={date}
+              totalResults={resultSet.totalResults}
+              isAlternative={true}
+            />
+          )}
+          <div className={styles.flightsList}>
+            {resultSet.flights.map((flight) => (
+              <FlightCard key={`${date}-${flight.id}`} flight={flight} onSelect={onFlightSelect} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+interface ResultsHeaderProps {
+  date?: string;
+  totalResults: number;
+  isAlternative?: boolean;
+}
+
+function ResultsHeader({ date, totalResults, isAlternative = false }: ResultsHeaderProps) {
+  return (
+    <div className={`${styles.resultsHeaderCard} ${isAlternative ? styles.alternativeHeader : ''}`}>
+      <div className={styles.resultsHeaderContent}>
+        <div className={styles.resultsTitle}>
+          <span className={styles.resultsTitleText}>
+            <Plane className={styles.resultsTitleIcon} />
+            {date ? `Flights for ${date}` : 'Top departing flights'}
+          </span>
+          <div className={styles.resultsCount}>
+            {totalResults} flight{totalResults !== 1 ? "s" : ""} found
+          </div>
+        </div>
       </div>
     </div>
   )

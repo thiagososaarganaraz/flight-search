@@ -4,7 +4,7 @@ import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { useAirportSearch, type Airport } from "@/hooks/use-airport-search"
 import { MapPin, Loader2 } from "lucide-react"
-import styles from "@/styles/components.module.css"
+import styles from "./airport-autocomplete.module.css"
 
 interface AirportAutocompleteProps {
   value: string
@@ -25,12 +25,13 @@ export function AirportAutocomplete({
 }: AirportAutocompleteProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(-1)
-  const { query, setQuery, suggestions, isLoading } = useAirportSearch()
+  const { query, setQuery, suggestions, isLoading, error } = useAirportSearch()
   const inputRef = useRef<HTMLInputElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setQuery(value)
+    console.log(suggestions);
   }, [value, setQuery])
 
   useEffect(() => {
@@ -98,18 +99,18 @@ export function AirportAutocomplete({
     }
   }
 
-  const shouldShowDropdown = isOpen && (suggestions.length > 0 || isLoading)
+  const shouldShowDropdown = isOpen && (suggestions.length > 0 || isLoading || error)
 
   return (
     <div className={styles.autocompleteContainer}>
       {label && (
-        <label htmlFor={`airport-${label}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          <MapPin className="inline h-4 w-4 mr-1" />
+        <label htmlFor={`airport-${label}`} className={styles.label}>
+          <MapPin className={styles.labelIcon} />
           {label}
         </label>
       )}
 
-      <div className="relative">
+      <div className={styles.inputWrapper}>
         <input
           ref={inputRef}
           id={label ? `airport-${label}` : undefined}
@@ -121,7 +122,7 @@ export function AirportAutocomplete({
           placeholder={placeholder}
           required={required}
           disabled={disabled}
-          className={`${styles.autocompleteInput} ${styles.focusVisible}`}
+          className={styles.autocompleteInput}
           autoComplete="off"
           role="combobox"
           aria-expanded={isOpen}
@@ -131,8 +132,8 @@ export function AirportAutocomplete({
         />
 
         {isLoading && (
-          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-            <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
+          <div className={styles.loadingSpinner}>
+            <Loader2 className={`${styles.spinnerIcon} animate-spin`} />
           </div>
         )}
       </div>
@@ -140,14 +141,16 @@ export function AirportAutocomplete({
       {shouldShowDropdown && (
         <div ref={dropdownRef} className={styles.autocompleteDropdown} role="listbox">
           {isLoading ? (
-            <div className="px-4 py-3 text-center text-gray-500 dark:text-gray-400">
+            <div className={styles.loadingContainer}>
               <div className={styles.loadingDots}>
                 <div className={styles.loadingDot}></div>
                 <div className={styles.loadingDot}></div>
                 <div className={styles.loadingDot}></div>
               </div>
-              <span className="ml-2">Searching airports...</span>
+              <span className={styles.loadingText}>Searching airports...</span>
             </div>
+          ) : error ? (
+            <div className={styles.error}>{error}</div>
           ) : suggestions.length > 0 ? (
             suggestions.map((airport, index) => (
               <div
@@ -160,21 +163,28 @@ export function AirportAutocomplete({
                 role="option"
                 aria-selected={index === selectedIndex}
                 tabIndex={-1}
+                style={
+                  index === selectedIndex
+                    ? {
+                        backgroundColor: "var(--accent)",
+                      }
+                    : {}
+                }
               >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className={styles.suggestionCode}>{airport.code}</span>
-                    <div className={styles.suggestionName}>{airport.name}</div>
+                <div className={styles.suggestionContent}>
+                  <div className={styles.suggestionInfo}>
+                    <span className={styles.suggestionCode}>{airport?.code}</span>
+                    <div className={styles.suggestionName}>{airport?.name}</div>
                     <div className={styles.suggestionLocation}>
                       {airport.city}, {airport.country}
                     </div>
                   </div>
-                  <MapPin className="h-4 w-4 text-gray-400" />
+                  <MapPin className={styles.suggestionIcon} />
                 </div>
               </div>
             ))
           ) : (
-            <div className="px-4 py-3 text-center text-gray-500 dark:text-gray-400">No airports found</div>
+            <div className={styles.noResults}>No airports found</div>
           )}
         </div>
       )}

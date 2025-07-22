@@ -1,67 +1,112 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.75rem;
-    --toggle-bg: 210 40% 96%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.1%;
-    --toggle-bg: 217.2 32.6% 17.5%;
-  }
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground transition-colors duration-200;
-  }
+html {
+  scroll-behavior: smooth;
+  background-color: #f8f9fa;
+  color: #202124;
+}
 
-  html {
-    scroll-behavior: smooth;
-  }
+body {
+  font-family: Roboto, Arial, sans-serif;
+  line-height: 1.5;
+  background-color: var(--background);
+  color: var(--foreground);
+  margin: 0;
+}
+
+/* CSS Custom Properties for Google Flights-like theme */
+:root {
+  --background: #f8f9fa;
+  --foreground: #202124;
+  --card: #ffffff;
+  --card-foreground: #202124;
+  --popover: #ffffff;
+  --popover-foreground: #202124;
+  --primary: #1a73e8;
+  --primary-foreground: #ffffff;
+  --secondary: #e8f0fe;
+  --secondary-foreground: #1a73e8;
+  --muted: #f1f3f4;
+  --muted-foreground: #5f6368;
+  --accent: #e8f0fe;
+  --accent-foreground: #1a73e8;
+  --destructive: #d93025;
+  --destructive-foreground: #ffffff;
+  --border: #dadce0;
+  --input: #dadce0;
+  --ring: #1a73e8;
+  --radius: 0.5rem;
+  --toggle-bg: #e8f0fe;
+
+  --page-background: #f8f9fa;
+  --header-background: #ffffff;
+  --header-border: #dadce0;
+  --footer-background: #ffffff;
+  --footer-border: #dadce0;
+  --footer-text: #5f6368;
+}
+
+/* Dark theme inspired by Google dark mode */
+html.dark,
+html[data-theme="dark"],
+.dark {
+  --background: #202124;
+  --foreground: #e8eaed;
+  --card: #303134;
+  --card-foreground: #e8eaed;
+  --popover: #303134;
+  --popover-foreground: #e8eaed;
+  --primary: #8ab4f8;
+  --primary-foreground: #202124;
+  --secondary: #3c4043;
+  --secondary-foreground: #e8eaed;
+  --muted: #3c4043;
+  --muted-foreground: #9aa0a6;
+  --accent: #3c4043;
+  --accent-foreground: #e8eaed;
+  --destructive: #ea4335;
+  --destructive-foreground: #202124;
+  --border: #5f6368;
+  --input: #5f6368;
+  --ring: #8ab4f8;
+  --toggle-bg: #3c4043;
+
+  --page-background: #202124;
+  --header-background: #202124;
+  --header-border: #5f6368;
+  --footer-background: #202124;
+  --footer-border: #5f6368;
+  --footer-text: #9aa0a6;
+
+  background-color: #202124;
+  color: #e8eaed;
+}
+
+/* Ensure theme classes work */
+.light {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Enhanced animations */
@@ -97,43 +142,52 @@
   }
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .animate-pulse-slow {
   animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
-
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out;
 }
-
 .animate-slide-down {
   animation: slideDown 0.2s ease-out;
 }
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
 
-/* Improved focus styles */
+/* Focus styles */
 .focus-visible:focus-visible {
-  @apply outline-none ring-2 ring-blue-500 ring-offset-2 dark:ring-blue-400 dark:ring-offset-gray-900;
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ring), 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
 
-/* Smooth transitions */
-.transition-theme {
-  @apply transition-colors duration-200 ease-in-out;
+/* Smooth transitions for theme changes */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Custom scrollbar for dark mode */
-.dark ::-webkit-scrollbar {
+/* Custom scrollbar */
+::-webkit-scrollbar {
   width: 8px;
 }
-
-.dark ::-webkit-scrollbar-track {
-  @apply bg-gray-800;
+::-webkit-scrollbar-track {
+  background-color: var(--secondary);
 }
-
-.dark ::-webkit-scrollbar-thumb {
-  @apply bg-gray-600 rounded-full;
+::-webkit-scrollbar-thumb {
+  background-color: var(--muted-foreground);
+  border-radius: 4px;
 }
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-500;
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--foreground);
 }
 
 /* Accessibility improvements */
@@ -141,22 +195,33 @@
   .animate-pulse,
   .animate-pulse-slow,
   .animate-fade-in,
-  .animate-slide-down {
+  .animate-slide-down,
+  .animate-spin {
     animation: none;
   }
-
-  .transition-theme {
+  * {
     transition: none;
   }
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  .border-gray-200 {
-    @apply border-gray-400;
+  :root {
+    --border: #6b7280;
   }
+  html.dark,
+  html[data-theme="dark"],
+  .dark {
+    --border: #9ca3af;
+  }
+}
 
-  .dark .border-gray-700 {
-    @apply border-gray-500;
+/* Print styles */
+@media print {
+  :root {
+    --background: #ffffff;
+    --foreground: #000000;
+    --card: #ffffff;
+    --border: #000000;
   }
 }

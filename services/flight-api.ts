@@ -1,58 +1,117 @@
-import type { FlightSearchParams, FlightSearchResponse, Flight } from "@/types/flight"
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import type { FlightSearchParams, FlightSearchResponse, Flight, AirportSearchResult, AppConfig } from "@/types/flight"
 
-const API_BASE_URL = "https://sky-scrapper.p.rapidapi.com/api/v1"
-const API_KEY = process.env.NEXT_PUBLIC_RAPIDAPI_KEY || ""
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://sky-scrapper.p.rapidapi.com/api/v1";
+const API_KEY = process.env.NEXT_PUBLIC_RAPIDAPI_KEY || "";
+
+interface AlternativeFlightSearchResult {
+  date: string;
+  results: FlightSearchResponse;
+}
 
 class FlightApiService {
-  private async makeRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    const url = `${API_BASE_URL}${endpoint}`
+  private axiosInstance = axios.create({
+    baseURL: API_BASE_URL,
+    headers: {
+      'X-RapidAPI-Key': API_KEY,
+      'X-RapidAPI-Host': 'sky-scrapper.p.rapidapi.com',
+      'Content-Type': 'application/json'
+    }
+  });
 
-    try {
-      const response = await fetch(url, {
-        ...options,
-        headers: {
-          "X-RapidAPI-Key": API_KEY,
-          "X-RapidAPI-Host": "sky-scrapper.p.rapidapi.com",
-          "Content-Type": "application/json",
-          ...options.headers,
-        },
-      })
+  private cachedConfig: AppConfig | null = null;
 
-      if (!response.ok) {
-        // Handle different HTTP status codes
-        switch (response.status) {
-          case 400:
-            throw new Error("Invalid search parameters. Please check your input and try again.")
-          case 401:
-            throw new Error("API authentication failed. Please check your API key.")
-          case 403:
-            throw new Error("Access forbidden. You may have exceeded your API quota.")
-          case 404:
-            throw new Error("Flight search service not found.")
-          case 429:
-            throw new Error("Too many requests. Please wait a moment and try again.")
-          case 500:
-            throw new Error("Flight search service is temporarily unavailable.")
-          default:
-            throw new Error(`Flight search failed: ${response.status} ${response.statusText}`)
+  private handleError(error: unknown): never {
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError;
+      
+      if (axiosError.response?.data) {
+        const errorData = axiosError.response.data as { message?: Array<{ [key: string]: string }> | string };
+        
+        if (Array.isArray(errorData.message)) {
+          const errorMessages = errorData.message.map(err => Object.values(err).join(' ')).join(', ');
+          throw new Error(errorMessages);
+        } else if (typeof errorData.message === 'string') {
+          throw new Error(errorData.message);
         }
       }
 
-      const data = await response.json()
-      return data
+      switch (axiosError.response?.status) {
+        case 400:
+          throw new Error("Invalid search parameters. Please check your input and try again.");
+        case 401:
+          throw new Error("API authentication failed. Please check your API key.");
+        case 403:
+          throw new Error("Access forbidden. You may have exceeded your API quota.");
+        case 404:
+          throw new Error("Flight search service not found.");
+        case 429:
+          throw new Error("Too many requests. Please wait a moment and try again.");
+        case 500:
+          throw new Error("Flight search service is temporarily unavailable.");
+        default:
+          throw new Error(`Flight search failed: ${axiosError.message}`);
+      }
+    } else if (error instanceof Error) {
+      throw error;
+    }
+    
+    throw new Error("An unexpected error occurred while searching for flights.");
+  }
+
+  private async getAppConfig(): Promise<AppConfig> {
+    if (this.cachedConfig) {
+      return this.cachedConfig;
+    }
+
+    try {
+      const response = await this.axiosInstance.get<{ data: AppConfig }>('/getConfig');
+      this.cachedConfig = response.data.data;
+      return this.cachedConfig;
     } catch (error) {
-      // Handle network errors and other exceptions
-      if (error instanceof TypeError && error.message.includes("fetch")) {
-        throw new Error("Network error. Please check your internet connection and try again.")
+      this.handleError(error);
+    }
+  }
+
+  async searchAirports(query: string): Promise<AirportSearchResult[]> {
+    try {
+      if (!query || query.length < 2) {
+        throw new Error("Please enter at least 2 characters to search for airports.");
       }
 
-      // Re-throw API errors with their specific messages
-      if (error instanceof Error) {
-        throw error
+      const response = await this.axiosInstance.get<{ data: AirportSearchResult[] }>('/flights/searchAirport', {
+        params: {
+          query
+        }
+      });
+
+      return response.data.data;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  private async getAirportIds(airportQuery: string): Promise<{ skyId: string; entityId: string }> {
+    try {
+      // If already in format "skyId|entityId", just split and return
+      if (airportQuery.includes('|')) {
+        const [skyId, entityId] = airportQuery.split('|');
+        return { skyId: skyId.trim(), entityId: entityId.trim() };
       }
 
-      // Fallback for unknown errors
-      throw new Error("An unexpected error occurred while searching for flights.")
+      // Otherwise search for the airport
+      const airports = await this.searchAirports(airportQuery);
+      if (!airports || airports.length === 0) {
+        throw new Error(`No airports found for query: ${airportQuery}`);
+      }
+
+      // Return the first matching airport
+      return {
+        skyId: airports[0].skyId,
+        entityId: airports[0].entityId
+      };
+    } catch (error) {
+      this.handleError(error);
     }
   }
 
@@ -60,102 +119,146 @@ class FlightApiService {
     try {
       // Validate input parameters
       if (!params.origin || !params.destination) {
-        throw new Error("Origin and destination are required.")
+        throw new Error("Origin and destination are required.");
       }
 
       if (!params.departureDate) {
-        throw new Error("Departure date is required.")
+        throw new Error("Departure date is required.");
       }
 
       if (params.adults < 1) {
-        throw new Error("At least one adult passenger is required.")
+        throw new Error("At least one adult passenger is required.");
       }
 
-      // Mock implementation with realistic delay
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      // Get airport IDs
+      const [originIds, destinationIds] = await Promise.all([
+        this.getAirportIds(params.origin),
+        this.getAirportIds(params.destination)
+      ]);
 
-      // Simulate occasional API errors for testing
-      if (Math.random() < 0.1) {
-        // 10% chance of error
-        throw new Error("Flight search service is temporarily busy. Please try again.")
+      // Get app config for default values
+      const config = await this.getAppConfig();
+
+      // Prepare request parameters
+      const requestParams: Record<string, any> = {
+        originSkyId: originIds.skyId,
+        destinationSkyId: destinationIds.skyId,
+        originEntityId: originIds.entityId,
+        destinationEntityId: destinationIds.entityId,
+        date: params.departureDate,
+        cabinClass: params.cabinClass || 'economy',
+        adults: params.adults,
+        children: params.children || 0,
+        infants: params.infants || 0,
+        sortBy: params.sortBy || 'best',
+        currency: params.currency || config?.currency || 'USD',
+        market: params.market || config?.market || 'en-US',
+        countryCode: params.countryCode || config?.countryCode || 'US'
+      };
+
+      // Add return date if it's a round trip
+      if (params.returnDate && params.tripType === 'round_trip') {
+        requestParams.returnDate = params.returnDate;
       }
 
-      return this.getMockFlightData(params)
+      const response = await this.axiosInstance.get<FlightSearchResponse>('/flights/searchFlights', {
+        params: requestParams
+      });
+
+      return response.data;
     } catch (error) {
-      // Log error for debugging (in production, use proper logging service)
-      console.error("Flight search error:", error)
-
-      // Re-throw the error to be handled by the calling code
-      throw error
+      this.handleError(error);
     }
   }
 
-  // Add method to validate airport codes
-  private validateAirportCode(code: string): boolean {
-    return /^[A-Z]{3}$/.test(code.toUpperCase())
-  }
-
-  // Enhanced mock data generation with error simulation
-  private getMockFlightData(params: FlightSearchParams): FlightSearchResponse {
+  async getFlightDetails(flightId: string): Promise<Flight> {
     try {
-      // Extract airport codes from the input (handle "LAX - Los Angeles" format)
-      const originCode = params.origin.split(" ")[0].toUpperCase()
-      const destinationCode = params.destination.split(" ")[0].toUpperCase()
-
-      // Validate airport codes
-      if (!this.validateAirportCode(originCode) || !this.validateAirportCode(destinationCode)) {
-        throw new Error("Invalid airport code format. Please use 3-letter airport codes.")
-      }
-
-      if (originCode === destinationCode) {
-        throw new Error("Origin and destination cannot be the same.")
-      }
-
-      const mockFlights: Flight[] = [
-        {
-          id: "1",
-          segments: [
-            {
-              airline: "American Airlines",
-              airlineCode: "AA",
-              flightNumber: "AA1234",
-              departure: {
-                airport: { code: originCode, name: "Origin Airport", city: "Origin City", country: "USA" },
-                time: "08:30",
-                date: params.departureDate,
-              },
-              arrival: {
-                airport: {
-                  code: destinationCode,
-                  name: "Destination Airport",
-                  city: "Destination City",
-                  country: "USA",
-                },
-                time: "17:15",
-                date: params.departureDate,
-              },
-              duration: "5h 45m",
-              aircraft: "Boeing 737-800",
-            },
-          ],
-          totalDuration: "5h 45m",
-          stops: 0,
-          price: { amount: 299, currency: "USD" },
-          airline: "American Airlines",
-          airlineCode: "AA",
-        },
-        // ... other mock flights with similar updates
-      ]
-
-      return {
-        flights: mockFlights,
-        totalResults: mockFlights.length,
-        searchId: "mock-search-" + Date.now(),
-      }
+      const response = await this.axiosInstance.get<Flight>(`/flights/getFlightDetails/${flightId}`);
+      return response.data;
     } catch (error) {
-      throw error
+      this.handleError(error);
     }
   }
 }
 
-export const flightApiService = new FlightApiService()
+export async function searchFlightsWithAlternatives(
+  originalParams: FlightSearchParams,
+  daysToCheck: number = 3
+): Promise<{
+  originalDate: string;
+  foundResults: AlternativeFlightSearchResult[];
+  message?: string;
+}> {
+  // First try the original date
+  const originalResults = await flightApiService.searchFlights(originalParams);
+  
+  // If we have results, return them immediately
+  if (originalResults.flights.length > 0) {
+    return {
+      originalDate: originalParams.departureDate,
+      foundResults: [{
+        date: originalParams.departureDate,
+        results: originalResults
+      }]
+    };
+  }
+
+  // Generate alternative dates (-1, +1, -2, +2, -3, +3)
+  const alternativeDates: string[] = [];
+  const originalDate = new Date(originalParams.departureDate);
+  
+  for (let i = 1; i <= daysToCheck; i++) {
+    // Previous days
+    const prevDate = new Date(originalDate);
+    prevDate.setDate(originalDate.getDate() - i);
+    alternativeDates.push(prevDate.toISOString().split('T')[0]);
+    
+    // Next days
+    const nextDate = new Date(originalDate);
+    nextDate.setDate(originalDate.getDate() + i);
+    alternativeDates.push(nextDate.toISOString().split('T')[0]);
+  }
+
+  // Search all alternative dates in parallel
+  const searchPromises = alternativeDates.map(date => {
+    const params = { ...originalParams, departureDate: date };
+    return flightApiService.searchFlights(params)
+      .then(results => ({ date, results }))
+      .catch(() => ({ date, results: { flights: [], totalResults: 0, searchId: '' } }));
+  });
+
+  const allResults = await Promise.all(searchPromises);
+  
+  // Filter to only dates that have results
+  const validResults = allResults.filter(result => 
+    result.results.flights.length > 0
+  );
+
+  // Sort by closest to original date
+  validResults.sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    const diffA = Math.abs(dateA.getTime() - originalDate.getTime());
+    const diffB = Math.abs(dateB.getTime() - originalDate.getTime());
+    return diffA - diffB;
+  });
+
+  // Prepare the response
+  const response: {
+    originalDate: string;
+    foundResults: AlternativeFlightSearchResult[];
+    message?: string;
+  } = {
+    originalDate: originalParams.departureDate,
+    foundResults: validResults
+  };
+
+  // Add message if we had to use alternative dates
+  if (validResults.length > 0 && validResults[0].date !== originalParams.departureDate) {
+    response.message = `No flights found for ${originalParams.departureDate}, but here are some alternatives.`;
+  }
+
+  return response;
+}
+
+export const flightApiService = new FlightApiService();
