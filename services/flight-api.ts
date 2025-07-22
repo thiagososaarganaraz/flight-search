@@ -80,7 +80,7 @@ class FlightApiService {
         throw new Error("Flight search service is temporarily busy. Please try again.")
       }
 
-      return this.getMockFlightData(params)
+      return this.makeRequest(API_BASE_URL)
     } catch (error) {
       // Log error for debugging (in production, use proper logging service)
       console.error("Flight search error:", error)

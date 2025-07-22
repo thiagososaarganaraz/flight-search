@@ -36,7 +36,7 @@ export default function HomePage() {
       <header className={styles.header}>
         <div className={styles.headerContent}>
           <div className={styles.headerInner}>
-            <h1 className={styles.headerTitle}>Flight Search</h1>
+            <h1 className={styles.headerTitle}>Google Flights Copycat</h1>
             <ThemeToggle />
           </div>
         </div>

@@ -28,7 +28,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 3rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--card-foreground);
   transition: color 0.3s ease;
 }
@@ -52,8 +52,8 @@
 }
 
 .headerTitle {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--foreground);
   transition: color 0.3s ease;
 }
