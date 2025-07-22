@@ -125,7 +125,7 @@
 .classSection {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1.8rem;
 }
 
 .classLabel {
@@ -149,7 +149,7 @@
 }
 
 .submitButton:hover:not(:disabled) {
-  background-color: #2563eb;
+  background-color: var(--primary);
 }
 
 .submitButton:disabled {
@@ -173,6 +173,7 @@
   color: var(--foreground);
   font-size: 0.875rem;
   transition: border-color 0.15s ease-in-out, background-color 0.3s ease, color 0.3s ease;
+  margin: 0 auto;
 }
 
 .selectInput:focus {

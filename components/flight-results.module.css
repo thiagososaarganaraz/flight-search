@@ -8,8 +8,8 @@
 }
 
 .resultsHeaderCard {
-  background-color: white;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
@@ -35,11 +35,7 @@
   gap: 0.5rem;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #111827;
-}
-
-.dark .resultsTitleText {
-  color: #f9fafb;
+  color: var(--foreground);
 }
 
 .resultsTitleIcon {
@@ -48,17 +44,12 @@
 }
 
 .resultsCount {
-  background-color: #f3f4f6;
-  color: #374151;
+  background-color: var(--background);
+  color: var(--foreground);
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 500;
-}
-
-.dark .resultsCount {
-  background-color: #374151;
-  color: #d1d5db;
 }
 
 .flightsList {
@@ -71,15 +62,15 @@
   width: 100%;
   max-width: 64rem;
   margin: 0 auto;
-  background-color: white;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .dark .noResultsCard {
-  background-color: #1f2937;
-  border-color: #374151;
+  background-color: var(--background);
+  border-color: var(--border);
 }
 
 .noResults {
@@ -91,7 +82,7 @@
   height: 3rem;
   width: 3rem;
   margin: 0 auto 1rem;
-  color: #9ca3af;
+  color: var(--muted);
 }
 
 .dark .noResultsIcon {

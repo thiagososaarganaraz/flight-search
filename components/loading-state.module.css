@@ -8,15 +8,11 @@
 }
 
 .loadingHeaderCard {
-  background-color: white;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  color: var(--foreground);
   border-radius: 0.5rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-
-.dark .loadingHeaderCard {
-  background-color: #1f2937;
-  border-color: #374151;
 }
 
 .loadingHeader {
@@ -36,23 +32,14 @@
 .loadingText {
   font-size: 1.125rem;
   font-weight: 500;
-  color: #111827;
-}
-
-.dark .loadingText {
-  color: #f9fafb;
+  color: var(--foreground);
 }
 
 .loadingCard {
-  background-color: white;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-
-.dark .loadingCard {
-  background-color: #1f2937;
-  border-color: #374151;
 }
 
 .loadingCardContent {

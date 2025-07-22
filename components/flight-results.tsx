@@ -31,7 +31,7 @@ export function FlightResults({ results, onFlightSelect }: FlightResultsProps) {
           <div className={styles.resultsTitle}>
             <span className={styles.resultsTitleText}>
               <Plane className={styles.resultsTitleIcon} />
-              Flight Results
+              Top departing flights
             </span>
             <div className={styles.resultsCount}>
               {results.totalResults} flight{results.totalResults !== 1 ? "s" : ""} found

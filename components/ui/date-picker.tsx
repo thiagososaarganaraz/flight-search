@@ -6,7 +6,7 @@ import { DatePicker as MUIDatePicker } from "@mui/x-date-pickers/DatePicker"
 import { CalendarIcon } from "lucide-react"
 
 interface DatePickerProps {
-  date?: Date
+  date?: Date | null
   onDateChange?: (date: Date | null) => void
   placeholder?: string
   disabled?: boolean
@@ -30,7 +30,7 @@ export function DatePicker({ date, onDateChange, placeholder = "Pick a date", di
             variant: "outlined",
             size: "small",
             InputProps: {
-              style: { color: "inherit" },
+              style: { color: "inherit"},
             },
           },
         }}

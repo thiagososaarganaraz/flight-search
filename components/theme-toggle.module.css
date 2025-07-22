@@ -4,8 +4,8 @@
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 0.375rem;
-  border: 1px solid var(--border);
+  border-radius: 2rem;
+  border: 0px solid var(--border);
   background-color: var(--background);
   color: var(--foreground);
   cursor: pointer;
@@ -18,7 +18,7 @@
 
 .themeToggleButton:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--ring);
+  /* box-shadow: 0 0 0 2px var(--ring); */
 }
 
 .themeIcon {
@@ -27,14 +27,14 @@
   transition: transform 0.2s ease-in-out;
 }
 
-.sunIcon {
+/* .sunIcon {
   color: #f59e0b;
 }
 
 .moonIcon {
   color: #60a5fa;
-}
+} */
 
-.themeToggleButton:hover .themeIcon {
+/* .themeToggleButton:hover .themeIcon {
   transform: scale(1.1);
-}
+} */

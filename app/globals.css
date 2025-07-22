@@ -7,89 +7,84 @@
 
 html {
   scroll-behavior: smooth;
-  /* Prevent flash of unstyled content */
-  background-color: #ffffff;
-  color: #111827;
+  background-color: #f8f9fa;
+  color: #202124;
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: Roboto, Arial, sans-serif;
   line-height: 1.5;
   background-color: var(--background);
   color: var(--foreground);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
 }
 
-/* CSS Custom Properties for theming */
+/* CSS Custom Properties for Google Flights-like theme */
 :root {
-  /* Light theme colors (default) */
-  --background: #ffffff;
-  --foreground: #111827;
+  --background: #f8f9fa;
+  --foreground: #202124;
   --card: #ffffff;
-  --card-foreground: #111827;
+  --card-foreground: #202124;
   --popover: #ffffff;
-  --popover-foreground: #111827;
-  --primary: #3b82f6;
+  --popover-foreground: #202124;
+  --primary: #1a73e8;
   --primary-foreground: #ffffff;
-  --secondary: #f3f4f6;
-  --secondary-foreground: #111827;
-  --muted: #f3f4f6;
-  --muted-foreground: #6b7280;
-  --accent: #f3f4f6;
-  --accent-foreground: #111827;
-  --destructive: #ef4444;
+  --secondary: #e8f0fe;
+  --secondary-foreground: #1a73e8;
+  --muted: #f1f3f4;
+  --muted-foreground: #5f6368;
+  --accent: #e8f0fe;
+  --accent-foreground: #1a73e8;
+  --destructive: #d93025;
   --destructive-foreground: #ffffff;
-  --border: #e5e7eb;
-  --input: #e5e7eb;
-  --ring: #3b82f6;
-  --radius: 0.75rem;
-  --toggle-bg: #f3f4f6;
+  --border: #dadce0;
+  --input: #dadce0;
+  --ring: #1a73e8;
+  --radius: 0.5rem;
+  --toggle-bg: #e8f0fe;
 
-  /* Page specific colors */
-  --page-background: #f9fafb;
+  --page-background: #f8f9fa;
   --header-background: #ffffff;
-  --header-border: #e5e7eb;
+  --header-border: #dadce0;
   --footer-background: #ffffff;
-  --footer-border: #e5e7eb;
-  --footer-text: #6b7280;
+  --footer-border: #dadce0;
+  --footer-text: #5f6368;
 }
 
-/* Dark theme colors */
+/* Dark theme inspired by Google dark mode */
 html.dark,
 html[data-theme="dark"],
 .dark {
-  --background: #111827;
-  --foreground: #f9fafb;
-  --card: #1f2937;
-  --card-foreground: #f9fafb;
-  --popover: #1f2937;
-  --popover-foreground: #f9fafb;
-  --primary: #60a5fa;
-  --primary-foreground: #111827;
-  --secondary: #374151;
-  --secondary-foreground: #f9fafb;
-  --muted: #374151;
-  --muted-foreground: #9ca3af;
-  --accent: #374151;
-  --accent-foreground: #f9fafb;
-  --destructive: #dc2626;
-  --destructive-foreground: #f9fafb;
-  --border: #374151;
-  --input: #374151;
-  --ring: #60a5fa;
-  --toggle-bg: #374151;
+  --background: #202124;
+  --foreground: #e8eaed;
+  --card: #303134;
+  --card-foreground: #e8eaed;
+  --popover: #303134;
+  --popover-foreground: #e8eaed;
+  --primary: #8ab4f8;
+  --primary-foreground: #202124;
+  --secondary: #3c4043;
+  --secondary-foreground: #e8eaed;
+  --muted: #3c4043;
+  --muted-foreground: #9aa0a6;
+  --accent: #3c4043;
+  --accent-foreground: #e8eaed;
+  --destructive: #ea4335;
+  --destructive-foreground: #202124;
+  --border: #5f6368;
+  --input: #5f6368;
+  --ring: #8ab4f8;
+  --toggle-bg: #3c4043;
 
-  /* Page specific colors */
-  --page-background: #111827;
-  --header-background: #111827;
-  --header-border: #374151;
-  --footer-background: #111827;
-  --footer-border: #374151;
-  --footer-text: #9ca3af;
+  --page-background: #202124;
+  --header-background: #202124;
+  --header-border: #5f6368;
+  --footer-background: #202124;
+  --footer-border: #5f6368;
+  --footer-text: #9aa0a6;
 
-  /* Override html background for dark theme */
-  background-color: #111827;
-  color: #f9fafb;
+  background-color: #202124;
+  color: #e8eaed;
 }
 
 /* Ensure theme classes work */

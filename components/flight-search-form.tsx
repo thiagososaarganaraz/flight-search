@@ -25,8 +25,8 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
     tripType: "round_trip",
   })
 
-  const [departureDate, setDepartureDate] = useState<Date>()
-  const [returnDate, setReturnDate] = useState<Date>()
+  const [departureDate, setDepartureDate] = useState<Date | null>(null)
+  const [returnDate, setReturnDate] = useState<Date | null>(null)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -115,7 +115,12 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
                 <Calendar className={styles.labelIcon} />
                 Departure
               </label>
-              <DatePicker date={departureDate} placeholder="Select departure date" />
+              <DatePicker 
+                date={departureDate}
+                onDateChange={setDepartureDate}
+                placeholder="Select departure date"
+                disabled={loading}
+              />
             </div>
             {formData.tripType === "round_trip" && (
               <div className={styles.inputGroup}>
@@ -123,7 +128,12 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
                   <Calendar className={styles.labelIcon} />
                   Return
                 </label>
-                <DatePicker date={returnDate} placeholder="Select return date" />
+                <DatePicker 
+                  date={returnDate}
+                  onDateChange={setReturnDate}
+                  placeholder="Select return date"
+                  disabled={loading}
+                />
               </div>
             )}
           </div>
