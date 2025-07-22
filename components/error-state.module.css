@@ -2,8 +2,8 @@
   width: 100%;
   max-width: 64rem;
   margin: 0 auto;
-  background-color: white;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
@@ -19,8 +19,8 @@
 }
 
 .errorContainer {
-  background-color: #fef2f2;
-  border: 1px solid #fecaca;
+  background-color: var(--card);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   padding: 1rem;
 }
@@ -38,7 +38,7 @@
   height: 3rem;
   width: 3rem;
   margin: 0 auto;
-  color: #ef4444;
+  color: var(--error);
 }
 
 .errorIconYellow {
@@ -57,7 +57,7 @@
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #111827;
+  color: var(--foreground);
 }
 
 .dark .errorTitle {
@@ -65,7 +65,7 @@
 }
 
 .errorText {
-  color: #b91c1c;
+  color: var(--muted-foreground);
   margin-bottom: 1.5rem;
 }
 
