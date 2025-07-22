@@ -66,10 +66,7 @@ export default function HomePage() {
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
           <div className={styles.footerText}>
-            <p>© 2024 Flight Search. Built with Next.js and TypeScript.</p>
-            <p className={styles.footerSubtext}>
-              This is a demo application. Flight data is mocked for demonstration purposes.
-            </p>
+            <p>© 2025 Thiago Sosa Dev.</p>
           </div>
         </div>
       </footer>
