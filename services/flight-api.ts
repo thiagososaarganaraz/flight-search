@@ -93,50 +93,52 @@ class FlightApiService {
   }
 
   async searchAirports(query: string): Promise<FormattedAirport[]> {
-    try {
-      if (!query || query.length < 2) {
-        throw new Error("Please enter at least 2 characters to search for airports.");
-      }
-
-      const response = await this.axiosInstance.get<{ data: AirportSearchResult[] }>('/flights/searchAirport', {
-        params: {
-          query
+      try {
+        if (!query || query.length < 2) {
+          throw new Error("Please enter at least 2 characters to search for airports.");
         }
-      });
 
-      return response.data.data.map((result: AirportSearchResult) => ({
-        code: result.skyId,
-        name: result.presentation?.title || result.navigation?.localizedName || 'Unknown',
-        city: result.presentation?.title || '',
-        country: result.presentation?.subtitle || '',
-        skyId: result.skyId,
-        entityId: result.entityId
-      }));
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.status === 429) {
-         console.warn("API limit reached (429). Using mock airport data.");
-         // Filtramos la data mockeada de forma muy simple basada en la query
-         const lowercaseQuery = query.toLowerCase();
-         const mockData = mockAirports.data as AirportSearchResult[];
-         const filteredMocks = mockData.filter(
-             (airport) => 
-                 airport.skyId.toLowerCase().includes(lowercaseQuery) ||
-                 airport.presentation?.title.toLowerCase().includes(lowercaseQuery) ||
-                 airport.navigation?.localizedName.toLowerCase().includes(lowercaseQuery)
-         );
-         
-         return filteredMocks.map((result: AirportSearchResult) => ({
-            code: result.skyId,
-            name: result.presentation?.title || result.navigation?.localizedName || 'Unknown',
-            city: result.presentation?.title || '',
-            country: result.presentation?.subtitle || '',
-            skyId: result.skyId,
-            entityId: result.entityId
-          }));
+        const response = await this.axiosInstance.get<{ data: AirportSearchResult[] }>('/flights/searchAirport', {
+          params: {
+            query
+          }
+        });
+
+        return response.data.data.map((result: AirportSearchResult) => ({
+          code: result.skyId,
+          name: result.presentation?.title || result.navigation?.localizedName || 'Unknown',
+          city: result.presentation?.title || '',
+          country: result.presentation?.subtitle || '',
+          skyId: result.skyId,
+          entityId: result.entityId
+        }));
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 429) {
+          console.warn("API limit reached (429). Using mock airport data.");
+          
+          const lowercaseQuery = query.toLowerCase();
+          const mockData = mockAirports.data as AirportSearchResult[];
+          
+          const filteredMocks = mockData.filter(
+              (airport) => 
+                  airport.skyId.toLowerCase().includes(lowercaseQuery) ||
+                  lowercaseQuery.includes(airport.skyId.toLowerCase()) ||
+                  airport.presentation?.title.toLowerCase().includes(lowercaseQuery) ||
+                  lowercaseQuery.includes(airport.presentation?.title.toLowerCase())
+          );
+          
+          return filteredMocks.map((result: AirportSearchResult) => ({
+              code: result.skyId,
+              name: result.presentation?.title || result.navigation?.localizedName || 'Unknown',
+              city: result.presentation?.title || '',
+              country: result.presentation?.subtitle || '',
+              skyId: result.skyId,
+              entityId: result.entityId
+            }));
+        }
+        this.handleError(error);
       }
-      this.handleError(error);
     }
-  }
 
   private async getAirportIds(airportQuery: string): Promise<{ skyId: string; entityId: string }> {
     try {
@@ -209,6 +211,7 @@ class FlightApiService {
        if (axios.isAxiosError(error) && error.response?.status === 429) {
           console.warn("API limit reached (429). Using mock flight search data.");
           // Devuelve todo el mock, idealmente tu json mockeado debería tener la estructura exacta de FlightSearchResponse
+          console.log("Mock flight search response:", mockFlights);
           return mockFlights as unknown as FlightSearchResponse; 
        }
       this.handleError(error);

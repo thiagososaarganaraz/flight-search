@@ -16,7 +16,9 @@ export function FlightHeader({ theme }: FlightHeaderProps) {
         <Image
           src={theme === "dark" ? logoDark : logoLight}
           alt="Flight Logo"
+          className={styles.logoImage}
           priority
+          width={1200}
         />
       </div>
       <h2 className={styles.formTitle}>Flights</h2>

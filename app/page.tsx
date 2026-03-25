@@ -57,6 +57,7 @@ export default function HomePage() {
 
   const handleSearch = async (params: FlightSearchParams) => {
     setLastSearchParams(params)
+    console.log("Searching flights with params:", params)
     await searchFlights(params)
   }
 
@@ -82,12 +83,12 @@ export default function HomePage() {
         </div>
       </header>
 
+      {/* Flight Header - Full Width */}
+      <FlightHeader theme={currentTheme} />
+
       {/* Main Content */}
       <main className={styles.main}>
         <div className={styles.mainContent}>
-          {/* Flight Header con prop de tema */}
-          <FlightHeader theme={currentTheme} />
-
           {/* Search Form */}
           <FlightSearchForm onSearch={handleSearch} loading={loading} />
 
@@ -104,7 +105,7 @@ export default function HomePage() {
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
           <div className={styles.footerText}>
-            <p>© 2025 Thiago Sosa Dev.</p>
+            <p>© 2025 Thiago Frontend Engineer.</p>
           </div>
         </div>
       </footer>
