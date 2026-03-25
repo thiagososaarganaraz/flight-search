@@ -1,0 +1,45 @@
+{
+  "id": "mock-flight-123",
+  "segments": [
+    {
+      "airline": "American Airlines",
+      "airlineCode": "AA",
+      "flightNumber": "AA900",
+      "departure": {
+        "airport": {
+          "code": "EZE",
+          "name": "Ministro Pistarini International Airport",
+          "city": "Buenos Aires",
+          "country": "Argentina",
+          "skyId": "EZE",
+          "entityId": "27539733"
+        },
+        "time": "21:00",
+        "date": "2024-10-15"
+      },
+      "arrival": {
+        "airport": {
+          "code": "JFK",
+          "name": "John F. Kennedy International Airport",
+          "city": "New York",
+          "country": "United States",
+          "skyId": "JFK",
+          "entityId": "27537542"
+        },
+        "time": "06:00",
+        "date": "2024-10-16"
+      },
+      "duration": "10h 00m",
+      "aircraft": "Boeing 777-200"
+    }
+  ],
+  "totalDuration": "10h 00m",
+  "stops": 0,
+  "price": {
+    "amount": 850.50,
+    "currency": "USD"
+  },
+  "airline": "American Airlines",
+  "airlineCode": "AA",
+  "bookingUrl": "https://www.americanairlines.com/booking/mock"
+}
