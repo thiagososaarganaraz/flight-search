@@ -9,6 +9,16 @@ interface AlternativeFlightSearchResult {
   results: FlightSearchResponse;
 }
 
+// Interfaz temporal si no quieres importar Airport directamente aquí
+interface FormattedAirport {
+  code: string;
+  name: string;
+  city: string;
+  country: string;
+  skyId: string;
+  entityId: string;
+}
+
 class FlightApiService {
   private axiosInstance = axios.create({
     baseURL: API_BASE_URL,
@@ -73,7 +83,7 @@ class FlightApiService {
     }
   }
 
-  async searchAirports(query: string): Promise<AirportSearchResult[]> {
+  async searchAirports(query: string): Promise<FormattedAirport[]> {
     try {
       if (!query || query.length < 2) {
         throw new Error("Please enter at least 2 characters to search for airports.");
@@ -85,7 +95,17 @@ class FlightApiService {
         }
       });
 
-      return response.data.data;
+      // Mapeamos aquí mismo para devolver el formato limpio que espera el frontend
+      const formattedResults = response.data.data.map((result: AirportSearchResult) => ({
+        code: result.skyId,
+        name: result.presentation?.title || result.navigation?.localizedName || 'Unknown',
+        city: result.presentation?.title || '',
+        country: result.presentation?.subtitle || '',
+        skyId: result.skyId,
+        entityId: result.entityId
+      }));
+
+      return formattedResults;
     } catch (error) {
       this.handleError(error);
     }

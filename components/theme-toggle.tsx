@@ -40,7 +40,6 @@ export function ThemeToggle() {
       document.documentElement.classList.add(newTheme)
       document.documentElement.setAttribute("data-theme", newTheme)
 
-      console.log(`Theme toggled to: ${newTheme}`)
     } catch (error) {
       console.error("Failed to toggle theme:", error)
     }

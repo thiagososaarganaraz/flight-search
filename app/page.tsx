@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { FlightSearchForm } from "@/components/flight-search-form"
 import { FlightResults } from "@/components/flight-results"
 import { LoadingState } from "@/components/loading-state"
@@ -9,10 +9,51 @@ import { useFlightSearch } from "@/hooks/use-flight-search"
 import type { FlightSearchParams } from "@/types/flight"
 import { ThemeToggle } from "@/components/theme-toggle"
 import styles from "./page.module.css"
+import { FlightHeader } from "@/components/flight-header"
 
 export default function HomePage() {
   const { data, loading, error, searchFlights, clearResults } = useFlightSearch()
   const [lastSearchParams, setLastSearchParams] = useState<FlightSearchParams | null>(null)
+  const [currentTheme, setCurrentTheme] = useState<"light" | "dark">("light")
+
+  // Efecto para manejar el tema
+  useEffect(() => {
+    const updateTheme = () => {
+      try {
+        const savedTheme = localStorage.getItem("flight-search-theme") as "light" | "dark" | null
+        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+        const theme = savedTheme || (systemPrefersDark ? "dark" : "light")
+        setCurrentTheme(theme)
+      } catch (e) {
+        console.error("Error accessing localStorage:", e)
+        setCurrentTheme("light")
+      }
+    }
+
+    // Configurar listeners para cambios
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "flight-search-theme") {
+        updateTheme()
+      }
+    }
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+    const handleSystemThemeChange = () => {
+      if (!localStorage.getItem("flight-search-theme")) {
+        updateTheme()
+      }
+    }
+
+    // Inicializar
+    updateTheme()
+    window.addEventListener("storage", handleStorageChange)
+    mediaQuery.addListener(handleSystemThemeChange)
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange)
+      mediaQuery.removeListener(handleSystemThemeChange)
+    }
+  }, [])
 
   const handleSearch = async (params: FlightSearchParams) => {
     setLastSearchParams(params)
@@ -26,12 +67,11 @@ export default function HomePage() {
   }
 
   const handleFlightSelect = (flight: any) => {
-    console.log("Selected flight:", flight)
-    alert(`Selected flight ${flight.segments[0].flightNumber} for $${flight.price.amount}`)
+    // alert(`Selected flight ${flight.segments[0].flightNumber} for $${flight.price.amount}`)
   }
 
   return (
-    <div className={styles.pageContainer}>
+    <div className={styles.pageContainer} data-theme={currentTheme}>
       {/* Header */}
       <header className={styles.header}>
         <div className={styles.headerContent}>
@@ -45,20 +85,18 @@ export default function HomePage() {
       {/* Main Content */}
       <main className={styles.main}>
         <div className={styles.mainContent}>
-          <div className={styles.formHeader}>
-            <h2 className={styles.formTitle}>
-              Flights
-            </h2>
-          </div>
+          {/* Flight Header con prop de tema */}
+          <FlightHeader theme={currentTheme} />
+
           {/* Search Form */}
           <FlightSearchForm onSearch={handleSearch} loading={loading} />
 
           {/* Results */}
           {loading && <LoadingState />}
-
           {error && <ErrorState error={error} onRetry={handleRetry} />}
-
-          {data && !loading && !error && <FlightResults results={data} onFlightSelect={handleFlightSelect} />}
+          {data && !loading && !error && (
+            <FlightResults results={data} onFlightSelect={handleFlightSelect} />
+          )}
         </div>
       </main>
 
