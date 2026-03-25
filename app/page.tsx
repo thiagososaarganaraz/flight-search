@@ -30,12 +30,18 @@ export default function HomePage() {
       }
     }
 
-    // Configurar listeners para cambios
+    // Configurar listeners
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === "flight-search-theme") {
         updateTheme()
       }
     }
+
+    // ✅ Escuchar nuestro evento personalizado
+    const handleCustomThemeChange = (e: Event) => {
+      const customEvent = e as CustomEvent<"light" | "dark">;
+      setCurrentTheme(customEvent.detail);
+    };
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
     const handleSystemThemeChange = () => {
@@ -46,11 +52,14 @@ export default function HomePage() {
 
     // Inicializar
     updateTheme()
+    
     window.addEventListener("storage", handleStorageChange)
+    window.addEventListener("theme-changed", handleCustomThemeChange) // ✅ Agregamos el listener
     mediaQuery.addListener(handleSystemThemeChange)
 
     return () => {
       window.removeEventListener("storage", handleStorageChange)
+      window.removeEventListener("theme-changed", handleCustomThemeChange) // ✅ Lo limpiamos
       mediaQuery.removeListener(handleSystemThemeChange)
     }
   }, [])

@@ -1,14 +1,14 @@
 .pageContainer {
   min-height: 100vh;
   background-color: var(--page-background);
-  transition: background-color 0.3s ease;
+  /* transition: background-color 3s ease; */
 }
 
 .header {
   background-color: var(--header-background);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid var(--header-border);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  /* transition: background-color 0.3s ease, border-color 0.3s ease; */
 }
 
 .headerContent {
@@ -19,7 +19,7 @@
 
 .formHeader {
   padding: 1.5rem;
-  transition: border-color 0.3s ease;
+  /* transition: border-color 0.3s ease; */
   margin: 0 auto;
 }
 
@@ -30,7 +30,7 @@
   font-size: 3rem;
   font-weight: 400;
   color: var(--card-foreground);
-  transition: color 0.3s ease;
+  /* transition: color 0.3s ease; */
 }
 
 @media (min-width: 640px) {
@@ -55,7 +55,7 @@
   font-size: 1rem;
   font-weight: 600;
   color: var(--foreground);
-  transition: color 0.3s ease;
+  /* transition: color 0.3s ease; */
 }
 
 .main {
@@ -86,7 +86,7 @@
   background-color: var(--footer-background);
   border-top: 1px solid var(--footer-border);
   margin-top: 4rem;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  /* transition: background-color 0.3s ease, border-color 0.3s ease; */
 }
 
 .footerContent {
@@ -111,7 +111,7 @@
   text-align: center;
   font-size: 0.875rem;
   color: var(--footer-text);
-  transition: color 0.3s ease;
+  /* transition: color 0.3s ease; */
 }
 
 .footerSubtext {

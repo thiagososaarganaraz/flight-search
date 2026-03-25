@@ -33,7 +33,7 @@
   line-height: 1.25rem;
   background-color: var(--background);
   color: var(--foreground);
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background-color 0.3s ease, color 0.3s ease;
+  /* transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background-color 0.3s ease, color 0.3s ease; */
 }
 
 .autocompleteInput:focus {
