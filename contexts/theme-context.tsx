@@ -34,12 +34,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // Set data attribute
     root.setAttribute("data-theme", newTheme)
 
-    console.log(`Theme applied: ${newTheme}`)
   }
 
   // Set theme with persistence
   const setTheme = (newTheme: Theme) => {
-    console.log(`Setting theme to: ${newTheme}`)
     setThemeState(newTheme)
 
     // Save to localStorage
@@ -84,7 +82,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     applyTheme(initialTheme)
     setMounted(true)
 
-    console.log(`Theme initialized: ${initialTheme}`)
   }, [])
 
   // Don't render children until mounted to prevent hydration issues

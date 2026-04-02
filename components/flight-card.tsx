@@ -3,6 +3,7 @@
 import type { Flight } from "@/types/flight"
 import { Clock, Plane, MapPin } from "lucide-react"
 import styles from "./flight-card.module.css"
+import { useEffect } from "react"
 
 interface FlightCardProps {
   flight: Flight

@@ -1,0 +1,46 @@
+{
+  "data": [
+    {
+      "skyId": "EZE",
+      "entityId": "27539733",
+      "presentation": {
+        "title": "Buenos Aires Ministro Pistarini",
+        "suggestionTitle": "Buenos Aires Ministro Pistarini (EZE)",
+        "subtitle": "Argentina"
+      },
+      "navigation": {
+        "entityId": "27539733",
+        "entityType": "AIRPORT",
+        "localizedName": "Buenos Aires"
+      }
+    },
+    {
+      "skyId": "JFK",
+      "entityId": "27537542",
+      "presentation": {
+        "title": "New York John F. Kennedy",
+        "suggestionTitle": "New York John F. Kennedy (JFK)",
+        "subtitle": "United States"
+      },
+      "navigation": {
+        "entityId": "27537542",
+        "entityType": "AIRPORT",
+        "localizedName": "New York"
+      }
+    },
+    {
+      "skyId": "MAD",
+      "entityId": "27544008",
+      "presentation": {
+        "title": "Madrid Barajas",
+        "suggestionTitle": "Madrid Barajas (MAD)",
+        "subtitle": "Spain"
+      },
+      "navigation": {
+        "entityId": "27544008",
+        "entityType": "AIRPORT",
+        "localizedName": "Madrid"
+      }
+    }
+  ]
+}

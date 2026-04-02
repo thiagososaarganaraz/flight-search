@@ -29,24 +29,20 @@ export function ThemeToggle() {
     const newTheme = theme === "light" ? "dark" : "light"
 
     try {
-      // Update state
       setThemeState(newTheme)
-
-      // Save to localStorage
       localStorage.setItem("flight-search-theme", newTheme)
-
-      // Apply to document
+      
       document.documentElement.classList.remove("light", "dark")
       document.documentElement.classList.add(newTheme)
       document.documentElement.setAttribute("data-theme", newTheme)
 
-      console.log(`Theme toggled to: ${newTheme}`)
+      window.dispatchEvent(new CustomEvent("theme-changed", { detail: newTheme }))
+
     } catch (error) {
       console.error("Failed to toggle theme:", error)
     }
   }
 
-  // Don't render until mounted
   if (!mounted) {
     return (
       <button className={styles.themeToggleButton} aria-label="Toggle theme">

@@ -21,7 +21,8 @@ body {
 
 /* CSS Custom Properties for Google Flights-like theme */
 :root {
-  --background: #f8f9fa;
+  /* --background: #f8f9fa; */
+  --background: #ffffff;
   --foreground: #202124;
   --card: #ffffff;
   --card-foreground: #202124;
@@ -43,7 +44,7 @@ body {
   --radius: 0.5rem;
   --toggle-bg: #e8f0fe;
 
-  --page-background: #f8f9fa;
+  --page-background: #ffffff;
   --header-background: #ffffff;
   --header-border: #dadce0;
   --footer-background: #ffffff;
@@ -172,7 +173,7 @@ html[data-theme="dark"],
 
 /* Smooth transitions for theme changes */
 * {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  /* transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; */
 }
 
 /* Custom scrollbar */

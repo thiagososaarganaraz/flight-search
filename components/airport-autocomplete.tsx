@@ -31,7 +31,6 @@ export function AirportAutocomplete({
 
   useEffect(() => {
     setQuery(value)
-    console.log(suggestions);
   }, [value, setQuery])
 
   useEffect(() => {

@@ -21,34 +21,25 @@ export function useAirportSearch() {
 
   const searchAirports = async (searchQuery: string): Promise<Airport[]> => {
     if (!searchQuery || searchQuery.length < 2) {
-      return []
+      return [];
     }
 
     try {
-      setIsLoading(true)
-      setError(null)
+      setIsLoading(true);
+      setError(null);
       
-      const apiResults = await flightApiService.searchAirports(searchQuery)
+      // La clase ya devuelve el formato correcto
+      const apiResults = await flightApiService.searchAirports(searchQuery);
       
-      // Transform API results to our Airport format
-      const formattedResults: Airport[] = apiResults.map(result => ({
-        code: result.code || result.skyId,
-        name: result.name,
-        city: result.city,
-        country: result.country,
-        skyId: result.skyId,
-        entityId: result.entityId
-      })).slice(0, 8) // Limit to 8 suggestions
-
-      return formattedResults
+      return apiResults.slice(0, 8);
     } catch (err) {
-      setError("Failed to search for airports. Please try again.")
-      console.error("Airport search error:", err)
-      return []
+      setError("Failed to search for airports. Please try again.");
+      console.error("Airport search error:", err);
+      return [];
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   // Memoize the search function
   const memoizedSearch = useMemo(() => searchAirports, [])
