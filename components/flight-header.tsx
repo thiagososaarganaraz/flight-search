@@ -21,7 +21,7 @@ export function FlightHeader({ theme }: FlightHeaderProps) {
           width={1200}
         />
       </div>
-      <h2 className={styles.formTitle}>Flights</h2>
+      <div className={styles.formTitle}>Flights</div>
     </div>
   )
 }

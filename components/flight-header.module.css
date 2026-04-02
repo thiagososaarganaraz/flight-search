@@ -1,11 +1,10 @@
 .formHeader {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
   width: 100%;
-  /* padding: 3rem 2rem; */
   box-sizing: border-box;
   background-color: var(--background);
 }
@@ -19,27 +18,27 @@
 }
 
 .logoImage {
-  /* Al ser un SVG, Next.js lo renderiza como <img> pero sin width/height fijos 
-     si no los especificamos en el componente. Controlamos el ancho con CSS. */
   width: 100%;
-  max-width: 1200px; /* Aumentado significativamente para un look más similar a Google Flights */
-  height: auto;     /* Mantiene la proporción original del SVG */
+  max-width: 1200px; 
+  height: auto;     
   display: block;
 }
 
 .formTitle {
+  /* position: absolute;  */
+  bottom: 0%;
+  width: 100%;
   margin: 0;
   text-align: center;
-  font-size: clamp(2.5rem, 6vw, 4rem); /* Hace que crezca suavemente */
+  font-size: clamp(2.5rem, 6vw, 4rem); 
   font-weight: 400;
-  color: var(--foreground);
+  color: var(--foreground); 
 }
 
-/* --- Media Query para Tablets y Escritorio (Opcional) --- */
+/* --- Media Query para Tablets y Escritorio --- */
 @media (min-width: 768px) {
   .logoContainer {
-    /* En pantallas más grandes, el logo es proporcionalmente más pequeño */
     width: 80vw;          
-    gap: 2rem;
+    /* gap: 2rem; (El gap ya no afectará al título porque tiene position: absolute) */
   }
 }
