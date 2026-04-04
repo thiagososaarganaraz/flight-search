@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { DatePicker } from "@/components/ui/date-picker"
 import type { FlightSearchParams } from "@/types/flight"
 import { format } from "date-fns"
@@ -31,6 +31,33 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
   const [isTripTypeOpen, setIsTripTypeOpen] = useState(false);
   const [isPassengersOpen, setIsPassengersOpen] = useState(false);
   const [isCabinClassOpen, setIsCabinClassOpen] = useState(false);
+
+  const tripTypeRef = useRef<HTMLDivElement>(null);
+  const passengersRef = useRef<HTMLDivElement>(null);
+  const cabinClassRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      // Si el ref existe y el clic NO fue dentro de ese elemento, cerramos su menú
+      if (tripTypeRef.current && !tripTypeRef.current.contains(event.target as Node)) {
+        setIsTripTypeOpen(false);
+      }
+      if (passengersRef.current && !passengersRef.current.contains(event.target as Node)) {
+        setIsPassengersOpen(false);
+      }
+      if (cabinClassRef.current && !cabinClassRef.current.contains(event.target as Node)) {
+        setIsCabinClassOpen(false);
+      }
+    }
+
+    // Escuchamos el evento mousedown (cuando se presiona el clic)
+    document.addEventListener("mousedown", handleClickOutside);
+    
+    // Limpieza del listener cuando el componente se desmonta
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const cabinClassMap = {
     economy: "Turista",
@@ -81,7 +108,7 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
             
             {/* --- 1. Tipo de Viaje --- */}
             <div className={styles.topSection}>
-              <div className={styles.customDropdownContainer}>
+              <div className={styles.customDropdownContainer} ref={tripTypeRef}>
                 <button
                   type="button"
                   className={`${styles.dropdownTrigger} ${isTripTypeOpen ? styles.triggerActive : ''}`}
@@ -126,7 +153,7 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
 
             {/* --- 2. Pasajeros --- */}
             <div className={styles.topSection}>
-              <div className={styles.customDropdownContainer}>
+              <div className={styles.customDropdownContainer} ref={passengersRef}>
                 <button
                   type="button"
                   className={`${styles.dropdownTrigger} ${isPassengersOpen ? styles.triggerActive : ''}`}
@@ -164,7 +191,7 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
 
             {/* --- 3. Clase de Cabina --- */}
             <div className={styles.topSection}>
-              <div className={styles.customDropdownContainer}>
+              <div className={styles.customDropdownContainer} ref={cabinClassRef}>
                 <button
                   type="button"
                   className={`${styles.dropdownTrigger} ${isCabinClassOpen ? styles.triggerActive : ''}`}
