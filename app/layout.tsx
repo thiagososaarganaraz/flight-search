@@ -6,12 +6,12 @@ import { ThemeProvider } from "@/contexts/theme-context"
 
 const inter = Inter({ subsets: ["latin"] })
 
-export const metadata: Metadata = {
-  title: "Flight Search - Find the Best Flights",
-  description: "Search and compare flights from multiple airlines. Find the best deals on flights worldwide.",
-  keywords: "flights, travel, airlines, booking, cheap flights",
-    generator: 'v0.dev'
-}
+export const metadata = {
+  title: "Google Flights",
+  icons: {
+    icon: "/favicon.svg",
+  },
+};
 
 export default function RootLayout({
   children,
