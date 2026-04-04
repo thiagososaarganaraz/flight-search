@@ -4,7 +4,7 @@ import type React from "react"
 import { useState } from "react"
 import { DatePicker } from "@/components/ui/date-picker"
 import type { FlightSearchParams } from "@/types/flight"
-import { Plane, Users, Calendar } from "lucide-react"
+import { Users, Calendar, ArrowRightLeft, Search } from "lucide-react"
 import { format } from "date-fns"
 import { AirportAutocomplete } from "./airport-autocomplete"
 import styles from "./flight-search-form.module.css"
@@ -50,183 +50,122 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
     onSearch(searchParams)
   }
 
+  const handleSwapAirports = () => {
+    setFormData((prev) => ({
+      ...prev,
+      origin: prev.destination || "",
+      destination: prev.origin || "",
+    }))
+  }
+
   const totalPassengers = (formData.adults || 0) + (formData.children || 0) + (formData.infants || 0)
 
   return (
     <div className={styles.searchFormCard}>
       <div className={styles.formContent}>
         <form onSubmit={handleSubmit} className={styles.formSection}>
-          {/* Trip Type */}
-          <div className={styles.tripTypeSection}>
-            <div className={styles.radioGroup}>
-              <input
-                type="radio"
-                id="round-trip"
-                name="tripType"
-                value="round_trip"
-                checked={formData.tripType === "round_trip"}
-                onChange={(e) => setFormData((prev) => ({ ...prev, tripType: e.target.value as "round_trip" }))}
-                className={styles.radioInput}
-              />
-              <label htmlFor="round-trip" className={styles.radioLabel}>
-                Round trip
-              </label>
-            </div>
-            <div className={styles.radioGroup}>
-              <input
-                type="radio"
-                id="one-way"
-                name="tripType"
-                value="one_way"
-                checked={formData.tripType === "one_way"}
-                onChange={(e) => setFormData((prev) => ({ ...prev, tripType: e.target.value as "one_way" }))}
-                className={styles.radioInput}
-              />
-              <label htmlFor="one-way" className={styles.radioLabel}>
-                One way
-              </label>
-            </div>
-          </div>
-
-          {/* Origin and Destination */}
-          <div className={styles.inputGrid}>
-            <AirportAutocomplete
-              value={formData.origin || ""}
-              onChange={(value) => setFormData((prev) => ({ ...prev, origin: value }))}
-              label="From"
-              placeholder="Origin airport (e.g., LAX)"
-              required
-              disabled={loading}
-            />
-            <AirportAutocomplete
-              value={formData.destination || ""}
-              onChange={(value) => setFormData((prev) => ({ ...prev, destination: value }))}
-              label="To"
-              placeholder="Destination airport (e.g., JFK)"
-              required
-              disabled={loading}
-            />
-          </div>
-
-          {/* Dates */}
-          <div className={styles.inputGrid}>
-            <div className={styles.inputGroup}>
-              <label className={styles.inputLabel}>
-                <Calendar className={styles.labelIcon} />
-                Departure
-              </label>
-              <DatePicker 
-                date={departureDate}
-                onDateChange={setDepartureDate}
-                placeholder="Select departure date"
-                disabled={loading}
-              />
-            </div>
-            {formData.tripType === "round_trip" && (
-              <div className={styles.inputGroup}>
-                <label className={styles.inputLabel}>
-                  <Calendar className={styles.labelIcon} />
-                  Return
-                </label>
-                <DatePicker 
-                  date={returnDate}
-                  onDateChange={setReturnDate}
-                  placeholder="Select return date"
-                  disabled={loading}
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Passengers and Class */}
-          <div className={styles.inputGrid}>
-            <div className={styles.passengersSection}>
-              <label className={styles.passengersLabel}>
-                <Users className={styles.labelIcon} />
-                Passengers
-              </label>
-              <div className={styles.passengersGrid}>
-                <div className={styles.passengerGroup}>
-                  <label htmlFor="adults" className={styles.passengerLabel}>
-                    Adults
-                  </label>
-                  <select
-                    id="adults"
-                    value={formData.adults?.toString()}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, adults: Number.parseInt(e.target.value) }))}
-                    className={styles.selectInput}
-                  >
-                    {[1, 2, 3, 4, 5, 6].map((num) => (
-                      <option key={num} value={num.toString()}>
-                        {num}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className={styles.passengerGroup}>
-                  <label htmlFor="children" className={styles.passengerLabel}>
-                    Children
-                  </label>
-                  <select
-                    id="children"
-                    value={formData.children?.toString()}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, children: Number.parseInt(e.target.value) }))}
-                    className={styles.selectInput}
-                  >
-                    {[0, 1, 2, 3, 4].map((num) => (
-                      <option key={num} value={num.toString()}>
-                        {num}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className={styles.passengerGroup}>
-                  <label htmlFor="infants" className={styles.passengerLabel}>
-                    Infants
-                  </label>
-                  <select
-                    id="infants"
-                    value={formData.infants?.toString()}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, infants: Number.parseInt(e.target.value) }))}
-                    className={styles.selectInput}
-                  >
-                    {[0, 1, 2].map((num) => (
-                      <option key={num} value={num.toString()}>
-                        {num}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div className={styles.classSection}>
-              <label htmlFor="class" className={styles.classLabel}>
-                Class
-              </label>
+          {/* Top Row: Trip Type, Passengers, Class */}
+          <div className={styles.topRow}>
+            <div className={styles.topSection}>
               <select
-                id="class"
+                value={formData.tripType}
+                onChange={(e) => setFormData((prev) => ({ ...prev, tripType: e.target.value as any }))}
+                className={styles.topSelect}
+              >
+                <option value="round_trip">Ida y vuelta</option>
+                <option value="one_way">Solo ida</option>
+              </select>
+            </div>
+
+            <div className={styles.topSection}>
+              <label className={styles.passengersCompact}>
+                <Users className={styles.compactIcon} />
+                <span>{totalPassengers}</span>
+              </label>
+            </div>
+
+            <div className={styles.topSection}>
+              <select
                 value={formData.cabinClass}
                 onChange={(e) => setFormData((prev) => ({ ...prev, cabinClass: e.target.value as any }))}
-                className={styles.selectInput}
+                className={styles.topSelect}
               >
-                <option value="economy">Economy</option>
-                <option value="premium_economy">Premium Economy</option>
-                <option value="business">Business</option>
-                <option value="first">First Class</option>
+                <option value="economy">Turista</option>
+                <option value="premium_economy">Premium Turista</option>
+                <option value="business">Negocios</option>
+                <option value="first">Primera Clase</option>
               </select>
             </div>
           </div>
 
-          <button
-            type="submit"
-            className={styles.submitButton}
-            disabled={loading || !formData.origin || !formData.destination || !departureDate}
-          >
-            {loading
-              ? "Searching..."
-              : `Search Flights (${totalPassengers} passenger${totalPassengers !== 1 ? "s" : ""})`}
-          </button>
+          {/* Bottom Row: Locations, Dates */}
+          <div className={styles.bottomRow}>
+            {/* Location Group */}
+            <div className={styles.locationGroup}>
+              <AirportAutocomplete
+                value={formData.origin || ""}
+                onChange={(value) => setFormData((prev) => ({ ...prev, origin: value }))}
+                label="From"
+                placeholder="Origen"
+                required
+                disabled={loading}
+              />
+              <button
+                type="button"
+                className={styles.swapButton}
+                onClick={handleSwapAirports}
+                disabled={loading}
+                title="Intercambiar origen y destino"
+              >
+                <ArrowRightLeft className={styles.swapIcon} />
+              </button>
+              <AirportAutocomplete
+                value={formData.destination || ""}
+                onChange={(value) => setFormData((prev) => ({ ...prev, destination: value }))}
+                label="To"
+                placeholder="¿A dónde quieres ir?"
+                required
+                disabled={loading}
+              />
+            </div>
+
+            {/* Dates Group */}
+            <div className={styles.datesGroup}>
+              <div className={styles.datePickerWrapper}>
+                <DatePicker 
+                  date={departureDate}
+                  onDateChange={setDepartureDate}
+                  placeholder="Salida"
+                  disabled={loading}
+                />
+              </div>
+              {formData.tripType === "round_trip" && (
+                <>
+                  <div className={styles.dateDivider}></div>
+                  <div className={styles.datePickerWrapper}>
+                    <DatePicker 
+                      date={returnDate}
+                      onDateChange={setReturnDate}
+                      placeholder="Regreso"
+                      disabled={loading}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         </form>
+
+        {/* Floating Search Button */}
+        <button
+          type="submit"
+          className={styles.floatingSearchButton}
+          disabled={loading || !formData.origin || !formData.destination || !departureDate}
+          onClick={handleSubmit}
+        >
+          <Search className={styles.searchIcon} />
+          <span>Explorar</span>
+        </button>
       </div>
     </div>
   )

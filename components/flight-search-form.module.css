@@ -1,213 +1,326 @@
 .searchFormCard {
   width: 100%;
-  max-width: 64rem;
+  max-width: 1200px;
   margin: 0 auto;
-  background-color: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  /* transition: background-color 0.3s ease, border-color 0.3s ease; */
-}
-
-.formTitleIcon {
-  height: 1.25rem;
-  width: 1.25rem;
+  background-color: #3a3a3a;
+  border: 1px solid #4a4a4a;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  padding-bottom: 2.5rem;
 }
 
 .formContent {
-  padding: 1.5rem;
+  padding: 1.25rem;
 }
 
 .formSection {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-}
-
-.tripTypeSection {
-  display: flex;
   gap: 1rem;
 }
 
-.radioGroup {
+/* Top Row - Compact Options */
+.topRow {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 2rem;
+  border-bottom: 1px solid #4a4a4a;
+  padding-bottom: 1rem;
 }
 
-.radioInput {
-  width: 1rem;
-  height: 1rem;
-  color: var(--primary);
-  border-color: var(--border);
-  accent-color: var(--primary);
-}
-
-.radioInput:focus {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.radioLabel {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--muted-foreground);
-  /* transition: color 0.3s ease; */
-}
-
-.inputGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-}
-
-@media (min-width: 768px) {
-  .inputGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.inputGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.inputLabel {
+.topSection {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--muted-foreground);
-  /* transition: color 0.3s ease; */
 }
 
-.labelIcon {
-  height: 1rem;
-  width: 1rem;
-}
-
-.passengersSection {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.passengersLabel {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--muted-foreground);
-  transition: color 0.3s ease;
-}
-
-.passengersGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.5rem;
-}
-
-.passengerGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.passengerLabel {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--muted-foreground);
-  transition: color 0.3s ease;
-}
-
-.classSection {
-  display: flex;
-  flex-direction: column;
-  gap: 1.8rem;
-}
-
-.classLabel {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--muted-foreground);
-  transition: color 0.3s ease;
-}
-
-.submitButton {
-  width: 100%;
-  background-color: var(--primary);
-  color: var(--primary-foreground);
+.topSelect {
+  background-color: transparent;
+  color: #e5e5e5;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.375rem;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.15s ease-in-out;
+  padding: 0.25rem 0.5rem;
+  outline: none;
 }
 
-.submitButton:hover:not(:disabled) {
-  background-color: var(--primary);
+.topSelect:hover,
+.topSelect:focus {
+  color: #ffffff;
 }
 
-.submitButton:disabled {
-  background-color: var(--muted);
-  color: var(--muted-foreground);
+.topSelect option {
+  background-color: #2a2a2a;
+  color: #e5e5e5;
+}
+
+.passengersCompact {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #e5e5e5;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.compactIcon {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: #a0a0a0;
+}
+
+/* Bottom Row - Inputs */
+.bottomRow {
+  display: flex;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+/* Location Group */
+.locationGroup {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  border: 1px solid #4a4a4a;
+  border-radius: 0.5rem;
+  background-color: #2a2a2a;
+  overflow: hidden;
+  gap: 0;
+}
+
+.locationGroup :global(> div) {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.locationGroup :global(> div:last-child) {
+  border-left: 1px solid #4a4a4a;
+}
+
+.swapButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  transition: color 0.2s ease;
+  margin: 0 0.5rem;
+  flex-shrink: 0;
+}
+
+.swapButton:hover:not(:disabled) {
+  color: #e5e5e5;
+}
+
+.swapButton:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
-.submitButton:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+.swapIcon {
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
-/* Select styling */
-.selectInput {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid var(--border);
-  border-radius: 0.375rem;
-  background-color: var(--background);
-  color: var(--foreground);
-  font-size: 0.875rem;
-  transition: border-color 0.15s ease-in-out, background-color 0.3s ease, color 0.3s ease;
-  margin: 0 auto;
-}
-
-.selectInput:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-/* Alternative dates styles */
-.alternativeDatesNote {
+/* Dates Group */
+.datesGroup {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  background-color: var(--color-info-bg);
-  color: var(--color-info-text);
-  border-radius: 8px;
-  margin-bottom: 16px;
-  font-size: 0.9rem;
+  border: 1px solid #4a4a4a;
+  border-radius: 0.5rem;
+  background-color: #2a2a2a;
+  overflow: hidden;
+  gap: 0;
+  min-width: 350px;
 }
 
-.calendarIcon {
-  width: 16px;
-  height: 16px;
+.datePickerWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
 }
 
-.dateGroup {
-  margin-bottom: 24px;
+.datePickerWrapper :global(> *) {
+  width: 100%;
 }
 
-.dateGroup:last-child {
-  margin-bottom: 0;
+.dateDivider {
+  width: 1px;
+  height: 1.5rem;
+  background-color: #4a4a4a;
 }
 
-.alternativeHeader {
-  background-color: var(--color-bg-secondary);
+/* Floating Search Button */
+.floatingSearchButton {
+  position: absolute;
+  bottom: -1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4a9eff;
+  color: white;
+  border: none;
+  padding: 0.65rem 1.8rem;
+  border-radius: 2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(74, 158, 255, 0.3);
+  z-index: 10;
+}
+
+.floatingSearchButton:hover:not(:disabled) {
+  background-color: #3a8ee5;
+  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.4);
+}
+
+.floatingSearchButton:disabled {
+  background-color: #6b7280;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.floatingSearchButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.3);
+}
+
+.searchIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Typography adjustments */
+.radioGroup {
+  display: none;
+}
+
+.radioInput {
+  display: none;
+}
+
+.radioLabel {
+  display: none;
+}
+
+.inputGrid {
+  display: none;
+}
+
+.inputGroup {
+  display: none;
+}
+
+.inputLabel {
+  display: none;
+}
+
+.labelIcon {
+  display: none;
+}
+
+.passengersSection {
+  display: none;
+}
+
+.passengersLabel {
+  display: none;
+}
+
+.passengersGrid {
+  display: none;
+}
+
+.passengerGroup {
+  display: none;
+}
+
+.passengerLabel {
+  display: none;
+}
+
+.classSection {
+  display: none;
+}
+
+.classLabel {
+  display: none;
+}
+
+.submitButton {
+  display: none;
+}
+
+.selectInput {
+  display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .searchFormCard {
+    padding-bottom: 2.2rem;
+  }
+
+  .bottomRow {
+    flex-direction: column;
+  }
+
+  .datesGroup {
+    min-width: 100%;
+  }
+
+  .topRow {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .searchFormCard {
+    padding-bottom: 2rem;
+  }
+
+  .formContent {
+    padding: 1rem;
+  }
+
+  .topRow {
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .topSelect,
+  .passengersCompact {
+    font-size: 0.85rem;
+  }
+
+  .bottomRow {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .floatingSearchButton {
+    padding: 0.55rem 1.5rem;
+    font-size: 0.85rem;
+  }
+
+  .floatingSearchButton span {
+    display: none;
+  }
+
+  .floatingSearchButton {
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border-radius: 50%;
+  }
 }
