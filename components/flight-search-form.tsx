@@ -160,7 +160,7 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
         <button
           type="submit"
           className={styles.floatingSearchButton}
-          disabled={loading || !formData.origin || !formData.destination || !departureDate}
+          // disabled={loading || !formData.origin || !formData.destination || !departureDate}
           onClick={handleSubmit}
         >
           <Search className={styles.searchIcon} />
