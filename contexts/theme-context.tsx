@@ -34,6 +34,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // Set data attribute
     root.setAttribute("data-theme", newTheme)
 
+    // Dispatch custom event for theme change
+    window.dispatchEvent(new CustomEvent("theme-changed", { detail: newTheme }))
   }
 
   // Set theme with persistence
