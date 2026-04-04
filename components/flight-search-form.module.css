@@ -5,12 +5,22 @@
   width: 80%;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #3a3a3a;
-  border: 1px solid #4a4a4a;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   position: relative;
   padding-bottom: 1rem;
+  border-radius: 0.75rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.searchFormCard.dark {
+  background-color: #3a3a3a;
+  border: 1px solid #4a4a4a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.searchFormCard.light {
+  background-color: #ffffff;
+  border: 1px solid #dadce0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .formContent {
@@ -46,8 +56,6 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background-color: transparent;
-  color: #e8eaed;
   border: none;
   border-bottom: 2px solid transparent;
   padding: 6px 12px;
@@ -55,19 +63,39 @@
   cursor: pointer;
   font-size: 0.95rem;
   font-weight: 500;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, color 0.2s;
+  background-color: transparent;
 }
 
-.dropdownTrigger:hover {
+.searchFormCard.dark .dropdownTrigger {
+  color: #e8eaed;
+}
+
+.searchFormCard.light .dropdownTrigger {
+  color: #202124;
+}
+
+.searchFormCard.dark .dropdownTrigger:hover {
   background-color: rgba(255, 255, 255, 0.08);
 }
 
+.searchFormCard.light .dropdownTrigger:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
 .triggerActive {
-  background-color: #3c4043;
   border-bottom: 2px solid #8ab4f8;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   color: #8ab4f8;
+}
+
+.searchFormCard.dark .triggerActive {
+  background-color: #3c4043;
+}
+
+.searchFormCard.light .triggerActive {
+  background-color: rgba(8, 102, 204, 0.04);
 }
 
 .compactIcon {
@@ -83,27 +111,49 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #333;
   min-width: 180px;
   border-radius: 0 4px 4px 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   z-index: 100;
   padding: 8px 0;
   display: flex;
   flex-direction: column;
-  }
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.searchFormCard.dark .dropdownMenu {
+  background-color: #333;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.searchFormCard.light .dropdownMenu {
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid #dadce0;
+}
 
 .dropdownItem {
   display: flex;
   align-items: center;
   padding: 10px 16px;
-  color: #e8eaed;
   cursor: pointer;
   font-size: 0.95rem;
+  transition: background-color 0.2s;
 }
 
-.dropdownItem:hover {
+.searchFormCard.dark .dropdownItem {
+  color: #e8eaed;
+}
+
+.searchFormCard.light .dropdownItem {
+  color: #202124;
+}
+
+.searchFormCard.dark .dropdownItem:hover {
   background-color: rgba(255, 255, 255, 0.05);
+}
+
+.searchFormCard.light .dropdownItem:hover {
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .checkIcon {
@@ -124,8 +174,16 @@
 }
 
 .counterLabel {
-  color: #e8eaed;
   font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.searchFormCard.dark .counterLabel {
+  color: #e8eaed;
+}
+
+.searchFormCard.light .counterLabel {
+  color: #202124;
 }
 
 .counterControls {
@@ -135,9 +193,7 @@
 }
 
 .counterBtn {
-  background-color: rgba(138, 180, 248, 0.1);
   border: none;
-  color: #8ab4f8;
   width: 32px;
   height: 32px;
   border-radius: 4px;
@@ -146,24 +202,54 @@
   justify-content: center;
   cursor: pointer;
   font-size: 1.2rem;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, color 0.2s;
 }
 
-.counterBtn:hover {
+.searchFormCard.dark .counterBtn {
+  background-color: rgba(138, 180, 248, 0.1);
+  color: #8ab4f8;
+}
+
+.searchFormCard.light .counterBtn {
+  background-color: rgba(8, 102, 204, 0.08);
+  color: #0066cc;
+}
+
+.searchFormCard.dark .counterBtn:hover {
   background-color: rgba(138, 180, 248, 0.2);
 }
 
+.searchFormCard.light .counterBtn:hover {
+  background-color: rgba(8, 102, 204, 0.12);
+}
+
 .counterBtn:disabled {
-  color: #5f6368;
-  background-color: transparent;
   cursor: not-allowed;
 }
 
+.searchFormCard.dark .counterBtn:disabled {
+  color: #5f6368;
+  background-color: transparent;
+}
+
+.searchFormCard.light .counterBtn:disabled {
+  color: #9aa0a6;
+  background-color: transparent;
+}
+
 .counterValue {
-  color: #e8eaed;
   min-width: 20px;
   text-align: center;
   font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.searchFormCard.dark .counterValue {
+  color: #e8eaed;
+}
+
+.searchFormCard.light .counterValue {
+  color: #202124;
 }
 
 /* =========================================
@@ -180,10 +266,18 @@
   flex: 1;
   display: flex;
   align-items: center;
-  border: 1px solid #4a4a4a;
   border-radius: 0.5rem;
   background-color: transparent;
   gap: 0;
+  transition: border-color 0.2s;
+}
+
+.searchFormCard.dark .locationGroup {
+  border: 1px solid #4a4a4a;
+}
+
+.searchFormCard.light .locationGroup {
+  border: 1px solid #dadce0;
 }
 
 .locationGroup :global(> div) {
@@ -193,7 +287,15 @@
 }
 
 .locationGroup :global(> div:last-child) {
+  border-left: 1px solid inherit;
+}
+
+.searchFormCard.dark .locationGroup :global(> div:last-child) {
   border-left: 1px solid #4a4a4a;
+}
+
+.searchFormCard.light .locationGroup :global(> div:last-child) {
+  border-left: 1px solid #dadce0;
 }
 
 .swapButton {
@@ -204,14 +306,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #9ca3af;
   transition: color 0.2s ease;
   margin: 0 0.5rem;
   flex-shrink: 0;
 }
 
-.swapButton:hover:not(:disabled) {
+.searchFormCard.dark .swapButton {
+  color: #9ca3af;
+}
+
+.searchFormCard.light .swapButton {
+  color: #6b7280;
+}
+
+.searchFormCard.dark .swapButton:hover:not(:disabled) {
   color: #e5e5e5;
+}
+
+.searchFormCard.light .swapButton:hover:not(:disabled) {
+  color: #202124;
 }
 
 .swapButton:disabled {
@@ -227,15 +340,9 @@
 /* =========================================
    6. GRUPO DE FECHAS Y MATERIAL UI
    ========================================= */
-.datesGroup {
+.datesContainerWrapper {
+  position: relative;
   flex: 1.2;
-  display: flex;
-  align-items: center;
-  border: 1px solid #4a4a4a;
-  border-radius: 0.5rem;
-  background-color: transparent;
-  height: 50px;
-  min-width: 0; 
 }
 
 .datePickerWrapper {
@@ -250,8 +357,16 @@
 .dateDivider {
   width: 1px;
   height: 70%;
-  background-color: #4a4a4a;
   flex-shrink: 0;
+  transition: background-color 0.2s;
+}
+
+.searchFormCard.dark .dateDivider {
+  background-color: #4a4a4a;
+}
+
+.searchFormCard.light .dateDivider {
+  background-color: #dadce0;
 }
 
 /* Overrides de Material UI DatePicker */
@@ -272,35 +387,58 @@
   padding: 4px;
 }
 
-/* --- Contenedor Padre --- */
-.datesContainerWrapper {
-  position: relative;
-  flex: 1.2;
-}
-
 /* --- El Gatillo (Falsos Inputs) --- */
 .datesGroup {
   display: flex;
   align-items: center;
-  border: 1px solid #4a4a4a;
   border-radius: 4px;
   height: 50px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 
-.datesGroup:hover, .datesGroupActive {
+.searchFormCard.dark .datesGroup {
+  border: 1px solid #4a4a4a;
+}
+
+.searchFormCard.light .datesGroup {
+  border: 1px solid #dadce0;
+}
+
+.searchFormCard.dark .datesGroup:hover,
+.searchFormCard.dark .datesGroupActive {
   background-color: rgba(255, 255, 255, 0.05);
+}
+
+.searchFormCard.light .datesGroup:hover,
+.searchFormCard.light .datesGroupActive {
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
 .dateDisplay {
   flex: 1;
   padding: 0 16px;
-  color: #e8eaed;
   font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.searchFormCard.dark .dateDisplay {
+  color: #e8eaed;
+}
+
+.searchFormCard.light .dateDisplay {
+  color: #202124;
 }
 
 .placeholder {
+  transition: color 0.2s;
+}
+
+.searchFormCard.dark .placeholder {
+  color: #9aa0a6;
+}
+
+.searchFormCard.light .placeholder {
   color: #9aa0a6;
 }
 
@@ -308,17 +446,27 @@
 .dateModalGigante {
   position: absolute;
   top: 100%;
-  right: 0; /* Lo anclamos a la derecha para que no se salga de la pantalla */
-  width: 700px; /* Ancho suficiente para 2 meses */
-  background-color: #303134; /* Gris oscuro característico */
+  right: 0;
+  width: 700px;
   border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   z-index: 200;
   margin-top: 8px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchFormCard.dark .dateModalGigante {
+  background-color: #303134;
   border: 1px solid #4a4a4a;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.searchFormCard.light .dateModalGigante {
+  background-color: #ffffff;
+  border: 1px solid #dadce0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* Header del Modal */
@@ -327,87 +475,121 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 24px;
-  border-bottom: 1px solid #4a4a4a;
   gap: 16px;
+  transition: border-color 0.2s;
+}
+
+.searchFormCard.dark .dateModalHeader {
+  border-bottom: 1px solid #4a4a4a;
+}
+
+.searchFormCard.light .dateModalHeader {
+  border-bottom: 1px solid #dadce0;
 }
 
 .dateModalHeaderLeft {
-  color: #e8eaed;
   font-weight: 500;
   font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.searchFormCard.dark .dateModalHeaderLeft {
+  color: #e8eaed;
+}
+
+.searchFormCard.light .dateModalHeaderLeft {
+  color: #202124;
 }
 
 .resetDateButton {
   background: none;
   border: none;
-  color: #9aa0a6;
   cursor: pointer;
   font-weight: 500;
   font-size: 0.9rem;
   margin-left: auto;
+  transition: color 0.2s;
 }
 
-.resetDateButton:hover {
+.searchFormCard.dark .resetDateButton {
+  color: #9aa0a6;
+}
+
+.searchFormCard.light .resetDateButton {
+  color: #5f6368;
+}
+
+.searchFormCard.dark .resetDateButton:hover {
   color: #e8eaed;
 }
 
+.searchFormCard.light .resetDateButton:hover {
+  color: #202124;
+}
+
 .modalInputsBox {
-  display: flex;
-  border: 1px solid #8ab4f8; /* El borde azul que se ve en la imagen */
   border-radius: 4px;
   overflow: hidden;
+  display: flex;
+  border: 2px solid #8ab4f8;
 }
 
 .modalInputFake {
   padding: 10px 16px;
-  color: #9aa0a6;
-  background-color: #202124;
+  background-color: transparent;
   font-size: 0.9rem;
-  min-width: 120px;
+  min-width: 140px;
+  text-align: center;
+  transition: color 0.2s;
 }
 
-.modalInputFake:first-child {
+.searchFormCard.dark .modalInputFake {
+  color: #e8eaed;
+}
+
+.searchFormCard.light .modalInputFake {
+  color: #202124;
+}
+
+.searchFormCard.dark .modalInputFake:first-child {
   border-right: 1px solid #4a4a4a;
+}
+
+.searchFormCard.light .modalInputFake:first-child {
+  border-right: 1px solid #dadce0;
 }
 
 /* Zona del Calendario */
 .calendarsWrapper {
-  min-height: 300px; /* Espacio para que tu librería pinte los meses */
+  min-height: 300px;
   padding: 16px;
+  transition: background-color 0.2s;
+}
+
+.searchFormCard.dark .calendarsWrapper {
   background-color: #303134;
 }
 
-/* Layout del calendario doble */
-.doubleCalendarLayout {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.calendarColumn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Opcional: Actualizar los inputs falsos del modal para que muestren la fecha elegida */
-.modalInputFake {
-  padding: 10px 16px;
-  color: #e8eaed; /* Texto claro cuando hay fecha */
-  background-color: #202124;
-  font-size: 0.9rem;
-  min-width: 140px;
-  text-align: center;
+.searchFormCard.light .calendarsWrapper {
+  background-color: #ffffff;
 }
 
 /* Footer y Botón Listo */
 .dateModalFooter {
   padding: 16px 24px;
-  border-top: 1px solid #4a4a4a;
   display: flex;
   justify-content: flex-end;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.searchFormCard.dark .dateModalFooter {
+  border-top: 1px solid #4a4a4a;
   background-color: #303134;
+}
+
+.searchFormCard.light .dateModalFooter {
+  border-top: 1px solid #dadce0;
+  background-color: #ffffff;
 }
 
 .doneButton {
@@ -434,8 +616,7 @@
   bottom: -1.25rem;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #8AB4F7;
-  color: #333;
+  color: white;
   border: none;
   padding: 0.65rem 1rem;
   border-radius: 2rem;
@@ -446,12 +627,27 @@
   align-items: center;
   gap: 0.6rem;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 8px rgba(74, 158, 255, 0.3);
   z-index: 10;
 }
 
-.floatingSearchButton:hover:not(:disabled) {
+.searchFormCard.dark .floatingSearchButton {
+  background-color: #8AB4F7;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(74, 158, 255, 0.3);
+}
+
+.searchFormCard.light .floatingSearchButton {
+  background-color: #0d47a1;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(13, 71, 161, 0.2);
+}
+
+.searchFormCard.dark .floatingSearchButton:hover:not(:disabled) {
   background-color: #9DC0F9;
+}
+
+.searchFormCard.light .floatingSearchButton:hover:not(:disabled) {
+  background-color: #1565c0;
 }
 
 .floatingSearchButton:disabled {

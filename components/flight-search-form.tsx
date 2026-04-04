@@ -15,6 +15,9 @@ interface FlightSearchFormProps {
 }
 
 export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
+  const [theme, setTheme] = useState<"light" | "dark">("dark")
+  const [isMounted, setIsMounted] = useState(false)
+  
   const [formData, setFormData] = useState<Partial<FlightSearchParams>>({
     origin: "",
     destination: "",
@@ -38,6 +41,32 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
   const passengersRef = useRef<HTMLDivElement>(null);
   const cabinClassRef = useRef<HTMLDivElement>(null);
   const dateModalRef = useRef<HTMLDivElement>(null);
+
+  // Sincronizar tema con el documento
+  useEffect(() => {
+    setIsMounted(true)
+    
+    const updateTheme = () => {
+      const htmlElement = document.documentElement
+      const currentTheme = htmlElement.classList.contains("dark") ? "dark" : "light"
+      setTheme(currentTheme)
+    }
+
+    // Actualizar tema inicial
+    updateTheme()
+
+    // Escuchar cambios de tema
+    const handleThemeChange = (e: Event) => {
+      const customEvent = e as CustomEvent<"light" | "dark">
+      setTheme(customEvent.detail)
+    }
+
+    window.addEventListener("theme-changed", handleThemeChange)
+
+    return () => {
+      window.removeEventListener("theme-changed", handleThemeChange)
+    }
+  }, [])
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -115,7 +144,7 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
   const totalPassengers = (formData.adults || 0) + (formData.children || 0) + (formData.infants || 0)
 
   return (
-    <div className={styles.searchFormCard}>
+    <div className={`${styles.searchFormCard} ${styles[theme]}`}>
       <div className={styles.formContent}>
         <form onSubmit={handleSubmit} className={styles.formSection}>
           
