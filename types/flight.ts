@@ -66,6 +66,8 @@ export interface FlightRecommendation {
   currency: string
   suggestedDate: string
   duration: string
+  stops: number
+  airline: string
   imageUrl: string
 }
 
