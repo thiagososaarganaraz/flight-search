@@ -1,9 +1,28 @@
 .autocompleteContainer {
   position: relative;
-  width: 100%;
   display: flex;
   align-items: center;
-  flex: 1;
+  /* El secreto: una transición suave y un valor de flex base */
+  flex: 1; 
+  transition: flex 0.3s ease; 
+  min-width: 0; /* Evita que el contenido interno rompa el flex */
+}
+
+/* Cuando el usuario hace click en el input (o cualquier hijo recibe foco) */
+.autocompleteContainer:focus-within {
+  flex: 4; /* Aumenta su proporción respecto al vecino */
+}
+
+.autocompleteContainer:first-child {
+  border-right: 1px solid #4a4a4a;
+}
+
+/* Estilo opcional para el input para que ocupe todo el espacio */
+.autocompleteContainer input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none; /* Quitamos el borde azul por defecto */
 }
 
 .label {
@@ -55,8 +74,9 @@
 .autocompleteDropdown {
   position: absolute;
   z-index: 50;
+  top: 100%;
   width: 100%;
-  margin-top: 0.25rem;
+  margin-top: 10px;
   background-color: #2a2a2a;
   border: 1px solid #4a4a4a;
   border-radius: 0.375rem;
