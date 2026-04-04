@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { FlightSearchForm } from "@/components/flight-search-form"
+import { FlightRecommendations } from "@/components/flight-recommendations"
 import { FlightResults } from "@/components/flight-results"
 import { LoadingState } from "@/components/loading-state"
 import { ErrorState } from "@/components/error-state"
@@ -106,6 +107,11 @@ export default function HomePage() {
           {error && <ErrorState error={error} onRetry={handleRetry} />}
           {data && !loading && !error && (
             <FlightResults results={data} onFlightSelect={handleFlightSelect} />
+          )}
+
+          {/* Recommendations - Show when no search has been performed */}
+          {!lastSearchParams && !loading && !error && !data && (
+            <FlightRecommendations />
           )}
         </div>
       </main>

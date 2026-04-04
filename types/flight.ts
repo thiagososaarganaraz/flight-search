@@ -56,6 +56,19 @@ export interface FlightSearchParams {
   countryCode?: string
 }
 
+export interface FlightRecommendation {
+  id: string
+  origin: string
+  destination: string
+  destinationCity: string
+  destinationCountry: string
+  price: number
+  currency: string
+  suggestedDate: string
+  duration: string
+  imageUrl: string
+}
+
 export interface FlightSearchResponse {
   flights: Flight[]
   totalResults: number

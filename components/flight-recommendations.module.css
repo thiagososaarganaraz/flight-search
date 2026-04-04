@@ -1,0 +1,175 @@
+.container {
+  padding: 1rem 0 !important;
+}
+
+.section {
+  padding: 3rem 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem !important;
+  font-weight: 500 !important;
+  color: #e5e5e5 !important;
+  margin-bottom: 2rem !important;
+  text-align: left;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  gap: 1.5rem !important;
+}
+
+.gridItem {
+  width: 100%;
+  min-width: 0;
+}
+
+.recommendationCard {
+  position: relative;
+  height: 300px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: #2a2a2a !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.recommendationCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.cardOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  z-index: 1;
+}
+
+.cardContent {
+  position: relative;
+  z-index: 2;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.destinationCity {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  line-height: 1.2;
+}
+
+.destinationCountry {
+  font-size: 0.9rem !important;
+  color: #d1d5db !important;
+  margin-top: 0.25rem !important;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.suggestedDate {
+  font-size: 0.85rem !important;
+  color: #d1d5db !important;
+  display: flex !important;
+  gap: 0.5rem;
+}
+
+.price {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  color: #8ab4f8 !important;
+  margin: 0 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .section {
+    padding: 2rem 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+    gap: 1rem !important;
+  }
+
+  .recommendationCard {
+    height: 250px;
+  }
+
+  .cardContent {
+    padding: 1rem;
+  }
+
+  .destinationCity {
+    font-size: 1.25rem !important;
+  }
+
+  .price {
+    font-size: 1.1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+    gap: 0.75rem !important;
+  }
+
+  .recommendationCard {
+    height: 200px;
+  }
+
+  .cardContent {
+    padding: 0.75rem;
+  }
+
+  .destinationCity {
+    font-size: 1rem !important;
+  }
+
+  .destinationCountry {
+    font-size: 0.75rem !important;
+  }
+
+  .price {
+    font-size: 0.95rem !important;
+  }
+}

@@ -280,3 +280,21 @@ html[data-theme="dark"],
   background-color: #4a9eff;
   color: #ffffff;
 }
+
+/* MUI Card and Grid Dark Theme */
+.dark .MuiCard-root {
+  background-color: #2a2a2a;
+  color: #e5e5e5;
+}
+
+.dark .MuiGrid-root {
+  background-color: transparent;
+}
+
+.dark .MuiTypography-root {
+  color: #e5e5e5;
+}
+
+.dark .MuiContainer-root {
+  background-color: transparent;
+}
