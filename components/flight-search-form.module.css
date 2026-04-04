@@ -272,6 +272,160 @@
   padding: 4px;
 }
 
+/* --- Contenedor Padre --- */
+.datesContainerWrapper {
+  position: relative;
+  flex: 1.2;
+}
+
+/* --- El Gatillo (Falsos Inputs) --- */
+.datesGroup {
+  display: flex;
+  align-items: center;
+  border: 1px solid #4a4a4a;
+  border-radius: 4px;
+  height: 50px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.datesGroup:hover, .datesGroupActive {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.dateDisplay {
+  flex: 1;
+  padding: 0 16px;
+  color: #e8eaed;
+  font-size: 0.95rem;
+}
+
+.placeholder {
+  color: #9aa0a6;
+}
+
+/* --- EL MODAL GIGANTE --- */
+.dateModalGigante {
+  position: absolute;
+  top: 100%;
+  right: 0; /* Lo anclamos a la derecha para que no se salga de la pantalla */
+  width: 700px; /* Ancho suficiente para 2 meses */
+  background-color: #303134; /* Gris oscuro característico */
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 200;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #4a4a4a;
+}
+
+/* Header del Modal */
+.dateModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid #4a4a4a;
+  gap: 16px;
+}
+
+.dateModalHeaderLeft {
+  color: #e8eaed;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.resetDateButton {
+  background: none;
+  border: none;
+  color: #9aa0a6;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-left: auto;
+}
+
+.resetDateButton:hover {
+  color: #e8eaed;
+}
+
+.modalInputsBox {
+  display: flex;
+  border: 1px solid #8ab4f8; /* El borde azul que se ve en la imagen */
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.modalInputFake {
+  padding: 10px 16px;
+  color: #9aa0a6;
+  background-color: #202124;
+  font-size: 0.9rem;
+  min-width: 120px;
+}
+
+.modalInputFake:first-child {
+  border-right: 1px solid #4a4a4a;
+}
+
+/* Zona del Calendario */
+.calendarsWrapper {
+  min-height: 300px; /* Espacio para que tu librería pinte los meses */
+  padding: 16px;
+  background-color: #303134;
+}
+
+/* Layout del calendario doble */
+.doubleCalendarLayout {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.calendarColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Opcional: Actualizar los inputs falsos del modal para que muestren la fecha elegida */
+.modalInputFake {
+  padding: 10px 16px;
+  color: #e8eaed; /* Texto claro cuando hay fecha */
+  background-color: #202124;
+  font-size: 0.9rem;
+  min-width: 140px;
+  text-align: center;
+}
+
+/* Footer y Botón Listo */
+.dateModalFooter {
+  padding: 16px 24px;
+  border-top: 1px solid #4a4a4a;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #303134;
+}
+
+.doneButton {
+  background-color: #8ab4f8;
+  color: #202124;
+  border: none;
+  border-radius: 24px; /* Forma de píldora */
+  padding: 8px 24px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.doneButton:hover {
+  background-color: #9dc0f9;
+}
+
 /* =========================================
    7. BOTÓN FLOTANTE DE BÚSQUEDA
    ========================================= */

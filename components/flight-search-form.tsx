@@ -2,9 +2,9 @@
 
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
-import { DatePicker } from "@/components/ui/date-picker"
+import { DatePicker, StaticCalendar } from "@/components/ui/date-picker"
 import type { FlightSearchParams } from "@/types/flight"
-import { format } from "date-fns"
+import { addMonths, format } from "date-fns"
 import { AirportAutocomplete } from "./airport-autocomplete"
 import styles from "./flight-search-form.module.css"
 import { Users, ArrowRightLeft, ChevronDown, Check, Search } from 'lucide-react';
@@ -26,27 +26,35 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
   })
 
   const [departureDate, setDepartureDate] = useState<Date | null>(null)
-  const [returnDate, setReturnDate] = useState<Date | null>(null)
+  const [returnDate, setReturnDate] = useState<Date | null>(addMonths(new Date(), 1))
   
   const [isTripTypeOpen, setIsTripTypeOpen] = useState(false);
   const [isPassengersOpen, setIsPassengersOpen] = useState(false);
   const [isCabinClassOpen, setIsCabinClassOpen] = useState(false);
 
+  const [isDateModalOpen, setIsDateModalOpen] = useState(false);
+
   const tripTypeRef = useRef<HTMLDivElement>(null);
   const passengersRef = useRef<HTMLDivElement>(null);
   const cabinClassRef = useRef<HTMLDivElement>(null);
+  const dateModalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      // Si el ref existe y el clic NO fue dentro de ese elemento, cerramos su menú
-      if (tripTypeRef.current && !tripTypeRef.current.contains(event.target as Node)) {
+      if (!(event.target instanceof Node)) return;
+
+      // 2. Ahora evaluamos cada menú con total seguridad
+      if (tripTypeRef.current && !tripTypeRef.current.contains(event.target)) {
         setIsTripTypeOpen(false);
       }
-      if (passengersRef.current && !passengersRef.current.contains(event.target as Node)) {
+      if (passengersRef.current && !passengersRef.current.contains(event.target)) {
         setIsPassengersOpen(false);
       }
-      if (cabinClassRef.current && !cabinClassRef.current.contains(event.target as Node)) {
+      if (cabinClassRef.current && !cabinClassRef.current.contains(event.target)) {
         setIsCabinClassOpen(false);
+      }
+      if (dateModalRef.current && !dateModalRef.current.contains(event.target)) {
+        setIsDateModalOpen(false);
       }
     }
 
@@ -58,6 +66,14 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    // Si el usuario elige una salida que es posterior al regreso actual,
+    // movemos el regreso un mes después de la nueva salida automáticamente.
+    if (departureDate && returnDate && departureDate > returnDate) {
+      setReturnDate(addMonths(departureDate, 1));
+    }
+  }, [departureDate]);
 
   const cabinClassMap = {
     economy: "Turista",
@@ -258,28 +274,105 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
               />
             </div>
 
-            {/* Dates Group */}
-            <div className={styles.datesGroup}>
-              <div className={styles.datePickerWrapper}>
-                <DatePicker 
-                  date={departureDate}
-                  onDateChange={setDepartureDate}
-                  placeholder="Salida"
-                  disabled={loading}
-                />
+            {/* Dates Group Container */}
+            <div className={styles.datesContainerWrapper} ref={dateModalRef}>
+              
+              {/* El gatillo visual (Parecen inputs, pero actúan como un gran botón) */}
+              <div 
+                className={`${styles.datesGroup} ${isDateModalOpen ? styles.datesGroupActive : ''}`}
+                onClick={() => setIsDateModalOpen(true)}
+              >
+                <div className={styles.dateDisplay}>
+                  <span className={!departureDate ? styles.placeholder : ''}>
+                    {departureDate ? format(departureDate, "dd/MM/yyyy") : "Salida"}
+                  </span>
+                </div>
+
+                {formData.tripType === "round_trip" && (
+                  <>
+                    <div className={styles.dateDivider}></div>
+                    <div className={styles.dateDisplay}>
+                      <span className={!returnDate ? styles.placeholder : ''}>
+                        {returnDate ? format(returnDate, "dd/MM/yyyy") : "Regreso"}
+                      </span>
+                    </div>
+                  </>
+                )}
               </div>
-              {formData.tripType === "round_trip" && (
-                <>
-                  <div className={styles.dateDivider}></div>
-                  <div className={styles.datePickerWrapper}>
-                    <DatePicker 
-                      date={returnDate}
-                      onDateChange={setReturnDate}
-                      placeholder="Regreso"
-                      disabled={loading}
-                    />
+
+              {/* EL MODAL GIGANTE DE GOOGLE FLIGHTS */}
+              {isDateModalOpen && (
+                <div className={styles.dateModalGigante}>
+                  
+                  {/* Cabecera del Modal (Opciones y réplica de inputs) */}
+                  <div className={styles.dateModalHeader}>
+                    <div className={styles.dateModalHeaderLeft}>
+                      <span className={styles.modalTripType}>Ida y vuelta</span>
+                    </div>
+                    <button 
+                      type="button" 
+                      className={styles.resetDateButton}
+                      onClick={() => { setDepartureDate(null); setReturnDate(null); }}
+                    >
+                      Restablecer
+                    </button>
+                    <div className={styles.modalInputsBox}>
+                      {/* Aquí adentro pondrías tus componentes <DatePicker> reales configurados 
+                          para que SIEMPRE se muestren abiertos (modo estático), o tu librería 
+                          de DateRangePicker */}
+                      <div className={styles.modalInputFake}>Salida</div>
+                      <div className={styles.modalInputFake}>Regreso</div>
+                    </div>
                   </div>
-                </>
+
+                  {/* Zona del Calendario Doble */}
+                  <div className={styles.calendarsWrapper}>
+                    <div className={styles.doubleCalendarLayout}>
+                      
+                      {/* Calendario de Salida */}
+                      <div className={styles.calendarColumn}>
+                        <StaticCalendar 
+                          date={departureDate}
+                          onDateChange={(newDate) => {
+                            setDepartureDate(newDate);
+                            if (returnDate && newDate && newDate > returnDate) {
+                              setReturnDate(null);
+                            }
+                          }}
+                          departureDate={departureDate}
+                          returnDate={formData.tripType === "round_trip" ? returnDate : null}
+                        />
+                      </div>
+
+                      {/* Calendario de Regreso */}
+                      {formData.tripType === "round_trip" && (
+                        <div className={styles.calendarColumn}>
+                          <StaticCalendar 
+                            date={returnDate}
+                            onDateChange={setReturnDate}
+                            minDate={departureDate || new Date()} 
+                            departureDate={departureDate}
+                            returnDate={returnDate}
+                            // MAGIA: El calendario se abre en el mes próximo, pero returnDate sigue siendo null
+                            defaultMonth={addMonths(new Date(), 1)} 
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Footer del Modal */}
+                  <div className={styles.dateModalFooter}>
+                    <button 
+                      type="button" 
+                      className={styles.doneButton}
+                      onClick={() => setIsDateModalOpen(false)}
+                    >
+                      Listo
+                    </button>
+                  </div>
+
+                </div>
               )}
             </div>
           </div>
