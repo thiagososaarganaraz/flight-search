@@ -4,10 +4,10 @@ import type React from "react"
 import { useState } from "react"
 import { DatePicker } from "@/components/ui/date-picker"
 import type { FlightSearchParams } from "@/types/flight"
-import { Users, Calendar, ArrowRightLeft, Search } from "lucide-react"
 import { format } from "date-fns"
 import { AirportAutocomplete } from "./airport-autocomplete"
 import styles from "./flight-search-form.module.css"
+import { Users, ArrowRightLeft, ChevronDown, Check, Search } from 'lucide-react';
 
 interface FlightSearchFormProps {
   onSearch: (params: FlightSearchParams) => void
@@ -27,6 +27,17 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
 
   const [departureDate, setDepartureDate] = useState<Date | null>(null)
   const [returnDate, setReturnDate] = useState<Date | null>(null)
+  
+  const [isTripTypeOpen, setIsTripTypeOpen] = useState(false);
+  const [isPassengersOpen, setIsPassengersOpen] = useState(false);
+  const [isCabinClassOpen, setIsCabinClassOpen] = useState(false);
+
+  const cabinClassMap = {
+    economy: "Turista",
+    premium_economy: "Premium Turista",
+    business: "Negocios",
+    first: "Primera Clase"
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -64,39 +75,130 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
     <div className={styles.searchFormCard}>
       <div className={styles.formContent}>
         <form onSubmit={handleSubmit} className={styles.formSection}>
+          
           {/* Top Row: Trip Type, Passengers, Class */}
           <div className={styles.topRow}>
+            
+            {/* --- 1. Tipo de Viaje --- */}
             <div className={styles.topSection}>
-              <select
-                value={formData.tripType}
-                onChange={(e) => setFormData((prev) => ({ ...prev, tripType: e.target.value as any }))}
-                className={styles.topSelect}
-              >
-                <option value="round_trip">Ida y vuelta</option>
-                <option value="one_way">Solo ida</option>
-              </select>
+              <div className={styles.customDropdownContainer}>
+                <button
+                  type="button"
+                  className={`${styles.dropdownTrigger} ${isTripTypeOpen ? styles.triggerActive : ''}`}
+                  onClick={() => setIsTripTypeOpen(!isTripTypeOpen)}
+                >
+                  <ArrowRightLeft className={styles.compactIcon} />
+                  <span>{formData.tripType === 'round_trip' ? 'Ida y vuelta' : 'Solo ida'}</span>
+                  <ChevronDown className={styles.compactIcon} />
+                </button>
+
+                {isTripTypeOpen && (
+                  <div className={styles.dropdownMenu}>
+                    <div
+                      className={styles.dropdownItem}
+                      onClick={() => { 
+                        setFormData((prev) => ({ ...prev, tripType: 'round_trip' })); 
+                        setIsTripTypeOpen(false); 
+                      }}
+                    >
+                      <span className={styles.checkIcon}>
+                        {formData.tripType === 'round_trip' && <Check size={16} />}
+                      </span>
+                      Ida y vuelta
+                    </div>
+                    
+                    <div
+                      className={styles.dropdownItem}
+                      onClick={() => { 
+                        setFormData((prev) => ({ ...prev, tripType: 'one_way' })); 
+                        setIsTripTypeOpen(false); 
+                      }}
+                    >
+                      <span className={styles.checkIcon}>
+                        {formData.tripType === 'one_way' && <Check size={16} />}
+                      </span>
+                      Solo ida
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
+            {/* --- 2. Pasajeros --- */}
             <div className={styles.topSection}>
-              <label className={styles.passengersCompact}>
-                <Users className={styles.compactIcon} />
-                <span>{totalPassengers}</span>
-              </label>
+              <div className={styles.customDropdownContainer}>
+                <button
+                  type="button"
+                  className={`${styles.dropdownTrigger} ${isPassengersOpen ? styles.triggerActive : ''}`}
+                  onClick={() => setIsPassengersOpen(!isPassengersOpen)}
+                >
+                  <Users className={styles.compactIcon} />
+                  <span>{totalPassengers}</span>
+                  <ChevronDown className={styles.compactIcon} />
+                </button>
+
+                {isPassengersOpen && (
+                  <div className={styles.dropdownMenu} style={{ minWidth: '220px', padding: '16px' }}>
+                    <div className={styles.counterRow}>
+                      <span className={styles.counterLabel}>Adultos</span>
+                      <div className={styles.counterControls}>
+                        <button 
+                          type="button" 
+                          className={styles.counterBtn}
+                        >
+                          -
+                        </button>
+                        <span className={styles.counterValue}>1</span>
+                        <button 
+                          type="button" 
+                          className={styles.counterBtn}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
+            {/* --- 3. Clase de Cabina --- */}
             <div className={styles.topSection}>
-              <select
-                value={formData.cabinClass}
-                onChange={(e) => setFormData((prev) => ({ ...prev, cabinClass: e.target.value as any }))}
-                className={styles.topSelect}
-              >
-                <option value="economy">Turista</option>
-                <option value="premium_economy">Premium Turista</option>
-                <option value="business">Negocios</option>
-                <option value="first">Primera Clase</option>
-              </select>
+              <div className={styles.customDropdownContainer}>
+                <button
+                  type="button"
+                  className={`${styles.dropdownTrigger} ${isCabinClassOpen ? styles.triggerActive : ''}`}
+                  onClick={() => setIsCabinClassOpen(!isCabinClassOpen)}
+                >
+                  <span>{cabinClassMap[formData.cabinClass as keyof typeof cabinClassMap] || "Turista"}</span>
+                  <ChevronDown className={styles.compactIcon} />
+                </button>
+
+                {isCabinClassOpen && (
+                  <div className={styles.dropdownMenu}>
+                    {Object.entries(cabinClassMap).map(([value, label]) => (
+                      <div
+                        key={value}
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          setFormData((prev) => ({ 
+                            ...prev, 
+                            cabinClass: value as "economy" | "premium_economy" | "business" | "first" 
+                          }));
+                          setIsCabinClassOpen(false); 
+                        }}
+                      >
+                        <span className={styles.checkIcon}>
+                          {formData.cabinClass === value && <Check size={16} />}
+                        </span>
+                        {label}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          </div> {/* <---- ESTE DIV FALTABA PARA CERRAR EL topRow */}
 
           {/* Bottom Row: Locations, Dates */}
           <div className={styles.bottomRow}>
@@ -160,7 +262,6 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
         <button
           type="submit"
           className={styles.floatingSearchButton}
-          // disabled={loading || !formData.origin || !formData.destination || !departureDate}
           onClick={handleSubmit}
         >
           <Search className={styles.searchIcon} />
