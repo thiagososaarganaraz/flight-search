@@ -226,3 +226,57 @@ html[data-theme="dark"],
     --border: #000000;
   }
 }
+
+/* MUI DatePicker Dark Theme Customization */
+.dark .MuiOutlinedInput-root {
+  background-color: transparent;
+  color: #e5e5e5;
+}
+
+.dark .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: #4a4a4a;
+}
+
+.dark .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #6b6b6b;
+}
+
+.dark .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #4a9eff;
+}
+
+.dark .MuiInputBase-input::placeholder {
+  color: #9ca3af;
+  opacity: 0.8;
+}
+
+.dark .MuiSvgIcon-root {
+  color: #9ca3af;
+}
+
+.dark .MuiPickersCalendarHeader-root {
+  background-color: #2a2a2a;
+  color: #e5e5e5;
+}
+
+.dark .MuiPaper-root {
+  background-color: #2a2a2a;
+  color: #e5e5e5;
+}
+
+.dark .MuiPickersDay-root {
+  color: #e5e5e5;
+}
+
+.dark .MuiPickersDay-root:hover {
+  background-color: #404040;
+}
+
+.dark .MuiPickersDay-today {
+  border-color: #4a9eff;
+}
+
+.dark .MuiPickersDay-daySelected {
+  background-color: #4a9eff;
+  color: #ffffff;
+}

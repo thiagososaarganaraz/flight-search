@@ -155,9 +155,7 @@ export function AirportAutocomplete({
               <div
                 key={airport.code}
                 id={`suggestion-${index}`}
-                className={`${styles.autocompleteSuggestion} ${
-                  index === selectedIndex ? "bg-blue-50 dark:bg-blue-900" : ""
-                }`}
+                className={styles.autocompleteSuggestion}
                 onClick={() => handleSuggestionClick(airport)}
                 role="option"
                 aria-selected={index === selectedIndex}
@@ -165,7 +163,7 @@ export function AirportAutocomplete({
                 style={
                   index === selectedIndex
                     ? {
-                        backgroundColor: "var(--accent)",
+                        backgroundColor: "#404040",
                       }
                     : {}
                 }
