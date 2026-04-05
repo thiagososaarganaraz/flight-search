@@ -2,13 +2,25 @@
    1. CONTENEDOR PRINCIPAL Y LAYOUT
    ========================================= */
 .searchFormCard {
-  width: 80%;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
   padding-bottom: 1rem;
   border-radius: 0.75rem;
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .searchFormCard {
+    width: 90%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .searchFormCard {
+    width: 80%;
+  }
 }
 
 .searchFormCard.dark {
@@ -37,10 +49,24 @@
    ========================================= */
 .topRow {
   display: flex;
-  align-items: center;
-  gap: 2rem;
+  align-items: stretch;
+  gap: 0.75rem;
   border-bottom: none;
   padding-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .topRow {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .topRow {
+    gap: 2rem;
+  }
 }
 
 .topSection {
@@ -257,8 +283,16 @@
    ========================================= */
 .bottomRow {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.75rem;
   align-items: stretch;
+}
+
+@media (min-width: 768px) {
+  .bottomRow {
+    flex-direction: row;
+    gap: 1rem;
+  }
 }
 
 /* Grupo de Ubicaciones (Origen/Destino) */
@@ -446,8 +480,9 @@
 .dateModalGigante {
   position: absolute;
   top: 100%;
+  left: 0;
   right: 0;
-  width: 700px;
+  width: 100%;
   border-radius: 8px;
   z-index: 200;
   margin-top: 8px;
@@ -455,6 +490,14 @@
   flex-direction: column;
   overflow: hidden;
   transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+@media (min-width: 768px) {
+  .dateModalGigante {
+    width: 700px;
+    left: auto;
+    right: 0;
+  }
 }
 
 .searchFormCard.dark .dateModalGigante {
@@ -667,54 +710,44 @@
 }
 
 /* =========================================
-   8. RESPONSIVE DESIGN (Media Queries)
+   8. RESPONSIVE DESIGN (Mobile-First)
    ========================================= */
-@media (max-width: 1024px) {
-  .searchFormCard {
-    padding-bottom: 2.2rem;
-  }
-
-  .bottomRow {
-    flex-direction: column;
-  }
-
-  .datesGroup {
-    min-width: 100%;
-  }
-
-  .topRow {
-    gap: 1.5rem;
-  }
+.floatingSearchButton {
+  padding: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  justify-content: center;
 }
 
-@media (max-width: 640px) {
-  .searchFormCard {
-    padding-bottom: 2rem;
-  }
+.floatingSearchButton span {
+  display: none;
+}
 
-  .formContent {
-    padding: 1rem;
-  }
+.topRow {
+  font-size: 0.85rem;
+}
 
-  .topRow {
-    gap: 1rem;
-    font-size: 0.85rem;
-  }
-
-  .bottomRow {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
+@media (min-width: 768px) {
   .floatingSearchButton {
-    padding: 0;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    justify-content: center;
+    padding: 0.65rem 1rem;
+    width: auto;
+    height: auto;
+    border-radius: 2rem;
+    justify-content: flex-start;
   }
 
   .floatingSearchButton span {
-    display: none;
+    display: inline;
+  }
+
+  .topRow {
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .topRow {
+    font-size: 0.95rem;
   }
 }

@@ -29,7 +29,7 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
   })
 
   const [departureDate, setDepartureDate] = useState<Date | null>(null)
-  const [returnDate, setReturnDate] = useState<Date | null>(addMonths(new Date(), 1))
+  const [returnDate, setReturnDate] = useState<Date | null>(null)
   
   const [isTripTypeOpen, setIsTripTypeOpen] = useState(false);
   const [isPassengersOpen, setIsPassengersOpen] = useState(false);
@@ -309,7 +309,10 @@ export function FlightSearchForm({ onSearch, loading }: FlightSearchFormProps) {
               {/* El gatillo visual (Parecen inputs, pero actúan como un gran botón) */}
               <div 
                 className={`${styles.datesGroup} ${isDateModalOpen ? styles.datesGroupActive : ''}`}
-                onClick={() => setIsDateModalOpen(true)}
+                onClick={() => {
+                  setIsDateModalOpen(true) 
+                  addMonths(new Date(), 1)
+                }}
               >
                 <div className={styles.dateDisplay}>
                   <span className={!departureDate ? styles.placeholder : ''}>
