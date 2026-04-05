@@ -1,38 +1,27 @@
 /* =========================================
    1. CONTENEDOR PRINCIPAL Y LAYOUT
    ========================================= */
+/* Estilos base (Celular) -> Se funde con el fondo, sin bordes */
 .searchFormCard {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
-  padding-bottom: 1rem;
-  border-radius: 0.75rem;
+  padding-bottom: 2rem; /* Espacio para el botón flotante */
+  border-radius: 0;
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-@media (min-width: 768px) {
-  .searchFormCard {
-    width: 90%;
-  }
-}
-
-@media (min-width: 1024px) {
-  .searchFormCard {
-    width: 80%;
-  }
-}
-
 .searchFormCard.dark {
-  background-color: #3a3a3a;
-  border: 1px solid #4a4a4a;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #202124; /* Color exacto de la primera imagen (fondo app) */
+  border: none;
+  box-shadow: none;
 }
 
 .searchFormCard.light {
   background-color: #ffffff;
-  border: 1px solid #dadce0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+  box-shadow: none;
 }
 
 .formContent {
@@ -44,28 +33,52 @@
   flex-direction: column;
 }
 
+/* Elevación a Tarjeta (Tablet y Escritorio) */
+@media (min-width: 768px) {
+  .searchFormCard {
+    width: 90%;
+    padding-bottom: 1rem;
+    border-radius: 0.75rem;
+  }
+  
+  .searchFormCard.dark {
+    background-color: #303134; /* Gris un poco más claro para la tarjeta */
+    border: 1px solid #4a4a4a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .searchFormCard.light {
+    border: 1px solid #dadce0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (min-width: 1024px) {
+  .searchFormCard {
+    width: 80%;
+  }
+}
+
 /* =========================================
    2. FILA SUPERIOR (Opciones Compactas)
    ========================================= */
 .topRow {
   display: flex;
   align-items: stretch;
-  gap: 0.75rem;
   border-bottom: none;
   padding-bottom: 1rem;
+  font-size: 0.85rem;
+}
+
+.topRow span { 
+  color: #9aa0a6;
 }
 
 @media (min-width: 768px) {
   .topRow {
     flex-direction: row;
     align-items: center;
-    gap: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .topRow {
-    gap: 2rem;
+    font-size: 0.95rem;
   }
 }
 
@@ -87,27 +100,17 @@
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: inherit;
   font-weight: 500;
   transition: background-color 0.2s, color 0.2s;
   background-color: transparent;
 }
 
-.searchFormCard.dark .dropdownTrigger {
-  color: #e8eaed;
-}
+.searchFormCard.dark .dropdownTrigger { color: #e8eaed; }
+.searchFormCard.light .dropdownTrigger { color: #202124; }
 
-.searchFormCard.light .dropdownTrigger {
-  color: #202124;
-}
-
-.searchFormCard.dark .dropdownTrigger:hover {
-  background-color: rgba(255, 255, 255, 0.08);
-}
-
-.searchFormCard.light .dropdownTrigger:hover {
-  background-color: rgba(0, 0, 0, 0.04);
-}
+.searchFormCard.dark .dropdownTrigger:hover { background-color: rgba(255, 255, 255, 0.08); }
+.searchFormCard.light .dropdownTrigger:hover { background-color: rgba(0, 0, 0, 0.04); }
 
 .triggerActive {
   border-bottom: 2px solid #8ab4f8;
@@ -116,13 +119,8 @@
   color: #8ab4f8;
 }
 
-.searchFormCard.dark .triggerActive {
-  background-color: #3c4043;
-}
-
-.searchFormCard.light .triggerActive {
-  background-color: rgba(8, 102, 204, 0.04);
-}
+.searchFormCard.dark .triggerActive { background-color: #3c4043; }
+.searchFormCard.light .triggerActive { background-color: rgba(8, 102, 204, 0.04); }
 
 .compactIcon {
   width: 1.1rem;
@@ -147,7 +145,8 @@
 }
 
 .searchFormCard.dark .dropdownMenu {
-  background-color: #333;
+  background-color: #303134; /* Match card color */
+  border: 1px solid #4a4a4a;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -166,21 +165,11 @@
   transition: background-color 0.2s;
 }
 
-.searchFormCard.dark .dropdownItem {
-  color: #e8eaed;
-}
+.searchFormCard.dark .dropdownItem { color: #e8eaed; }
+.searchFormCard.light .dropdownItem { color: #202124; }
 
-.searchFormCard.light .dropdownItem {
-  color: #202124;
-}
-
-.searchFormCard.dark .dropdownItem:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.searchFormCard.light .dropdownItem:hover {
-  background-color: rgba(0, 0, 0, 0.04);
-}
+.searchFormCard.dark .dropdownItem:hover { background-color: rgba(255, 255, 255, 0.05); }
+.searchFormCard.light .dropdownItem:hover { background-color: rgba(0, 0, 0, 0.04); }
 
 .checkIcon {
   width: 24px; 
@@ -199,18 +188,9 @@
   padding: 8px 0;
 }
 
-.counterLabel {
-  font-size: 0.95rem;
-  transition: color 0.2s;
-}
-
-.searchFormCard.dark .counterLabel {
-  color: #e8eaed;
-}
-
-.searchFormCard.light .counterLabel {
-  color: #202124;
-}
+.counterLabel { font-size: 0.95rem; transition: color 0.2s; }
+.searchFormCard.dark .counterLabel { color: #e8eaed; }
+.searchFormCard.light .counterLabel { color: #202124; }
 
 .counterControls {
   display: flex;
@@ -241,27 +221,12 @@
   color: #0066cc;
 }
 
-.searchFormCard.dark .counterBtn:hover {
-  background-color: rgba(138, 180, 248, 0.2);
-}
+.searchFormCard.dark .counterBtn:hover { background-color: rgba(138, 180, 248, 0.2); }
+.searchFormCard.light .counterBtn:hover { background-color: rgba(8, 102, 204, 0.12); }
 
-.searchFormCard.light .counterBtn:hover {
-  background-color: rgba(8, 102, 204, 0.12);
-}
-
-.counterBtn:disabled {
-  cursor: not-allowed;
-}
-
-.searchFormCard.dark .counterBtn:disabled {
-  color: #5f6368;
-  background-color: transparent;
-}
-
-.searchFormCard.light .counterBtn:disabled {
-  color: #9aa0a6;
-  background-color: transparent;
-}
+.counterBtn:disabled { cursor: not-allowed; }
+.searchFormCard.dark .counterBtn:disabled { color: #5f6368; background-color: transparent; }
+.searchFormCard.light .counterBtn:disabled { color: #9aa0a6; background-color: transparent; }
 
 .counterValue {
   min-width: 20px;
@@ -270,13 +235,8 @@
   transition: color 0.2s;
 }
 
-.searchFormCard.dark .counterValue {
-  color: #e8eaed;
-}
-
-.searchFormCard.light .counterValue {
-  color: #202124;
-}
+.searchFormCard.dark .counterValue { color: #e8eaed; }
+.searchFormCard.light .counterValue { color: #202124; }
 
 /* =========================================
    5. FILA INFERIOR (Inputs de Búsqueda)
@@ -306,13 +266,8 @@
   transition: border-color 0.2s;
 }
 
-.searchFormCard.dark .locationGroup {
-  border: 1px solid #4a4a4a;
-}
-
-.searchFormCard.light .locationGroup {
-  border: 1px solid #dadce0;
-}
+.searchFormCard.dark .locationGroup { border: 1px solid #5f6368; /* Color gris de borde exacto de Google Flights */ }
+.searchFormCard.light .locationGroup { border: 1px solid #dadce0; }
 
 .locationGroup :global(> div) {
   flex: 1;
@@ -320,17 +275,9 @@
   align-items: center;
 }
 
-.locationGroup :global(> div:last-child) {
-  border-left: 1px solid inherit;
-}
-
-.searchFormCard.dark .locationGroup :global(> div:last-child) {
-  border-left: 1px solid #4a4a4a;
-}
-
-.searchFormCard.light .locationGroup :global(> div:last-child) {
-  border-left: 1px solid #dadce0;
-}
+.locationGroup :global(> div:last-child) { border-left: 1px solid inherit; }
+.searchFormCard.dark .locationGroup :global(> div:last-child) { border-left: 1px solid #5f6368; }
+.searchFormCard.light .locationGroup :global(> div:last-child) { border-left: 1px solid #dadce0; }
 
 .swapButton {
   background-color: transparent;
@@ -345,21 +292,11 @@
   flex-shrink: 0;
 }
 
-.searchFormCard.dark .swapButton {
-  color: #9ca3af;
-}
+.searchFormCard.dark .swapButton { color: #9ca3af; }
+.searchFormCard.light .swapButton { color: #6b7280; }
 
-.searchFormCard.light .swapButton {
-  color: #6b7280;
-}
-
-.searchFormCard.dark .swapButton:hover:not(:disabled) {
-  color: #e5e5e5;
-}
-
-.searchFormCard.light .swapButton:hover:not(:disabled) {
-  color: #202124;
-}
+.searchFormCard.dark .swapButton:hover:not(:disabled) { color: #e8eaed; }
+.searchFormCard.light .swapButton:hover:not(:disabled) { color: #202124; }
 
 .swapButton:disabled {
   opacity: 0.5;
@@ -395,49 +332,27 @@
   transition: background-color 0.2s;
 }
 
-.searchFormCard.dark .dateDivider {
-  background-color: #4a4a4a;
-}
-
-.searchFormCard.light .dateDivider {
-  background-color: #dadce0;
-}
+.searchFormCard.dark .dateDivider { background-color: #5f6368; }
+.searchFormCard.light .dateDivider { background-color: #dadce0; }
 
 /* Overrides de Material UI DatePicker */
-.datePickerWrapper :global(fieldset) {
-  border: none !important;
-}
-
-.datePickerWrapper :global(.MuiPickersInputBase-root) {
-  background-color: transparent !important;
-}
-
-.datePickerWrapper :global(.MuiPickersInputBase-input) {
-  color: #e8eaed !important;
-}
-
-.datePickerWrapper :global(.MuiIconButton-root) {
-  color: #9aa0a6 !important;
-  padding: 4px;
-}
+.datePickerWrapper :global(fieldset) { border: none !important; }
+.datePickerWrapper :global(.MuiPickersInputBase-root) { background-color: transparent !important; }
+.datePickerWrapper :global(.MuiPickersInputBase-input) { color: #e8eaed !important; }
+.datePickerWrapper :global(.MuiIconButton-root) { color: #9aa0a6 !important; padding: 4px; }
 
 /* --- El Gatillo (Falsos Inputs) --- */
 .datesGroup {
   display: flex;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 0.5rem;
   height: 50px;
   cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s;
 }
 
-.searchFormCard.dark .datesGroup {
-  border: 1px solid #4a4a4a;
-}
-
-.searchFormCard.light .datesGroup {
-  border: 1px solid #dadce0;
-}
+.searchFormCard.dark .datesGroup { border: 1px solid #5f6368; }
+.searchFormCard.light .datesGroup { border: 1px solid #dadce0; }
 
 .searchFormCard.dark .datesGroup:hover,
 .searchFormCard.dark .datesGroupActive {
@@ -456,25 +371,12 @@
   transition: color 0.2s;
 }
 
-.searchFormCard.dark .dateDisplay {
-  color: #e8eaed;
-}
+.searchFormCard.dark .dateDisplay { color: #e8eaed; }
+.searchFormCard.light .dateDisplay { color: #202124; }
 
-.searchFormCard.light .dateDisplay {
-  color: #202124;
-}
-
-.placeholder {
-  transition: color 0.2s;
-}
-
-.searchFormCard.dark .placeholder {
-  color: #9aa0a6;
-}
-
-.searchFormCard.light .placeholder {
-  color: #9aa0a6;
-}
+.placeholder { transition: color 0.2s; }
+.searchFormCard.dark .placeholder,
+.searchFormCard.light .placeholder { color: #9aa0a6; }
 
 /* --- EL MODAL GIGANTE --- */
 .dateModalGigante {
@@ -522,13 +424,8 @@
   transition: border-color 0.2s;
 }
 
-.searchFormCard.dark .dateModalHeader {
-  border-bottom: 1px solid #4a4a4a;
-}
-
-.searchFormCard.light .dateModalHeader {
-  border-bottom: 1px solid #dadce0;
-}
+.searchFormCard.dark .dateModalHeader { border-bottom: 1px solid #4a4a4a; }
+.searchFormCard.light .dateModalHeader { border-bottom: 1px solid #dadce0; }
 
 .dateModalHeaderLeft {
   font-weight: 500;
@@ -536,13 +433,8 @@
   transition: color 0.2s;
 }
 
-.searchFormCard.dark .dateModalHeaderLeft {
-  color: #e8eaed;
-}
-
-.searchFormCard.light .dateModalHeaderLeft {
-  color: #202124;
-}
+.searchFormCard.dark .dateModalHeaderLeft { color: #e8eaed; }
+.searchFormCard.light .dateModalHeaderLeft { color: #202124; }
 
 .resetDateButton {
   background: none;
@@ -554,21 +446,10 @@
   transition: color 0.2s;
 }
 
-.searchFormCard.dark .resetDateButton {
-  color: #9aa0a6;
-}
-
-.searchFormCard.light .resetDateButton {
-  color: #5f6368;
-}
-
-.searchFormCard.dark .resetDateButton:hover {
-  color: #e8eaed;
-}
-
-.searchFormCard.light .resetDateButton:hover {
-  color: #202124;
-}
+.searchFormCard.dark .resetDateButton { color: #9aa0a6; }
+.searchFormCard.light .resetDateButton { color: #5f6368; }
+.searchFormCard.dark .resetDateButton:hover { color: #e8eaed; }
+.searchFormCard.light .resetDateButton:hover { color: #202124; }
 
 .modalInputsBox {
   border-radius: 4px;
@@ -586,21 +467,11 @@
   transition: color 0.2s;
 }
 
-.searchFormCard.dark .modalInputFake {
-  color: #e8eaed;
-}
+.searchFormCard.dark .modalInputFake { color: #e8eaed; }
+.searchFormCard.light .modalInputFake { color: #202124; }
 
-.searchFormCard.light .modalInputFake {
-  color: #202124;
-}
-
-.searchFormCard.dark .modalInputFake:first-child {
-  border-right: 1px solid #4a4a4a;
-}
-
-.searchFormCard.light .modalInputFake:first-child {
-  border-right: 1px solid #dadce0;
-}
+.searchFormCard.dark .modalInputFake:first-child { border-right: 1px solid #4a4a4a; }
+.searchFormCard.light .modalInputFake:first-child { border-right: 1px solid #dadce0; }
 
 /* Zona del Calendario */
 .calendarsWrapper {
@@ -609,13 +480,8 @@
   transition: background-color 0.2s;
 }
 
-.searchFormCard.dark .calendarsWrapper {
-  background-color: #303134;
-}
-
-.searchFormCard.light .calendarsWrapper {
-  background-color: #ffffff;
-}
+.searchFormCard.dark .calendarsWrapper { background-color: #303134; }
+.searchFormCard.light .calendarsWrapper { background-color: #ffffff; }
 
 /* Footer y Botón Listo */
 .dateModalFooter {
@@ -639,7 +505,7 @@
   background-color: #8ab4f8;
   color: #202124;
   border: none;
-  border-radius: 24px; /* Forma de píldora */
+  border-radius: 24px;
   padding: 8px 24px;
   font-weight: 500;
   font-size: 0.95rem;
@@ -647,35 +513,53 @@
   transition: background-color 0.2s;
 }
 
-.doneButton:hover {
-  background-color: #9dc0f9;
-}
+.doneButton:hover { background-color: #9dc0f9; }
 
 /* =========================================
    7. BOTÓN FLOTANTE DE BÚSQUEDA
    ========================================= */
+/* Estilos Base (Celular) - Redondo */
 .floatingSearchButton {
   position: absolute;
-  bottom: -1.25rem;
+  bottom: -1.5rem;
   left: 50%;
   transform: translateX(-50%);
   color: white;
   border: none;
-  padding: 0.65rem 1rem;
-  border-radius: 2rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
+  padding: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  justify-content: center;
+  cursor: pointer;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
   z-index: 10;
 }
 
+.floatingSearchButton span {
+  display: none; /* Oculta el texto "Explorar" en celular */
+}
+
+/* Tablet y Escritorio - Botón de Píldora */
+@media (min-width: 768px) {
+  .floatingSearchButton {
+    padding: 0.65rem 1.5rem;
+    width: auto;
+    height: auto;
+    border-radius: 2rem;
+    gap: 0.6rem;
+  }
+  
+  .floatingSearchButton span {
+    display: inline;
+  }
+}
+
 .searchFormCard.dark .floatingSearchButton {
   background-color: #8AB4F7;
-  color: #333;
+  color: #202124;
   box-shadow: 0 2px 8px rgba(74, 158, 255, 0.3);
 }
 
@@ -685,13 +569,8 @@
   box-shadow: 0 2px 8px rgba(13, 71, 161, 0.2);
 }
 
-.searchFormCard.dark .floatingSearchButton:hover:not(:disabled) {
-  background-color: #9DC0F9;
-}
-
-.searchFormCard.light .floatingSearchButton:hover:not(:disabled) {
-  background-color: #1565c0;
-}
+.searchFormCard.dark .floatingSearchButton:hover:not(:disabled) { background-color: #9DC0F9; }
+.searchFormCard.light .floatingSearchButton:hover:not(:disabled) { background-color: #1565c0; }
 
 .floatingSearchButton:disabled {
   background-color: #6b7280;
@@ -705,49 +584,6 @@
 }
 
 .searchIcon {
-  width: 1rem;
-  height: 1rem;
-}
-
-/* =========================================
-   8. RESPONSIVE DESIGN (Mobile-First)
-   ========================================= */
-.floatingSearchButton {
-  padding: 0;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  justify-content: center;
-}
-
-.floatingSearchButton span {
-  display: none;
-}
-
-.topRow {
-  font-size: 0.85rem;
-}
-
-@media (min-width: 768px) {
-  .floatingSearchButton {
-    padding: 0.65rem 1rem;
-    width: auto;
-    height: auto;
-    border-radius: 2rem;
-    justify-content: flex-start;
-  }
-
-  .floatingSearchButton span {
-    display: inline;
-  }
-
-  .topRow {
-    font-size: 0.95rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .topRow {
-    font-size: 0.95rem;
-  }
+  width: 1.2rem;
+  height: 1.2rem;
 }
