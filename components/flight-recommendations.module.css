@@ -3,9 +3,23 @@
 }
 
 .section {
-  padding: 2rem 1rem;
-  width: 80%;
+  padding: 1rem 0.75rem;
+  width: 100%;
   margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 1.5rem 1rem;
+    width: 90%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 2rem 1rem;
+    width: 80%;
+  }
 }
 
 .headerSection {
@@ -21,23 +35,63 @@
 }
 
 .sectionTitle {
-  font-size: 2rem !important;
+  font-size: 1.25rem !important;
   font-weight: 400 !important;
   color: #ffffff !important;
 }
 
+@media (min-width: 768px) {
+  .sectionTitle {
+    font-size: 1.5rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sectionTitle {
+    font-size: 2rem !important;
+  }
+}
+
 .subsectionTitle {
-  font-size: 1.1rem !important;
+  font-size: 0.875rem !important;
   font-weight: 500 !important;
   color: #e5e5e5 !important;
-  margin: 2rem 0 1.5rem 0 !important;
+  margin: 1rem 0 0.75rem 0 !important;
+}
+
+@media (min-width: 768px) {
+  .subsectionTitle {
+    font-size: 1rem !important;
+    margin: 2rem 0 1.5rem 0 !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .subsectionTitle {
+    font-size: 1.1rem !important;
+    margin: 2rem 0 1.5rem 0 !important;
+  }
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
   margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
 }
 
 .gridItem {
@@ -47,7 +101,7 @@
 
 .recommendationCard {
   position: relative;
-  height: 280px;
+  height: 200px;
   border-radius: 0.75rem;
   overflow: hidden;
   cursor: pointer;
@@ -59,6 +113,18 @@
   background-size: cover;
   background-position: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .recommendationCard {
+    height: 220px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .recommendationCard {
+    height: 280px;
+  }
 }
 
 .recommendationCard:hover {
@@ -84,7 +150,7 @@
 .cardContent {
   position: relative;
   z-index: 2;
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -98,13 +164,13 @@
 }
 
 .price {
-  font-size: 1.25rem !important;
+  font-size: 0.9rem !important;
   font-weight: 600 !important;
   color: #ffffff !important;
 }
 
 .destinationCity {
-  font-size: 1.5rem !important;
+  font-size: 1rem !important;
   font-weight: 500 !important;
   color: #ffffff !important;
   margin: 0 !important;
@@ -118,106 +184,57 @@
 }
 
 .flightInfo {
-  font-size: 0.875rem !important;
+  font-size: 0.75rem !important;
   color: #d1d5db !important;
   margin: 0.25rem 0 0 0 !important;
 }
 
 .flightDetails {
-  font-size: 0.8rem !important;
+  font-size: 0.7rem !important;
   color: #b4bcc4 !important;
   margin: 0 !important;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .recommendationCard {
-    height: 240px;
-  }
-
-  .destinationCity {
-    font-size: 1.25rem !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .section {
-    padding: 1.5rem 1rem;
-  }
-
-  .sectionTitle {
-    font-size: 1.5rem !important;
-  }
-
-  .subsectionTitle {
-    font-size: 1rem !important;
-  }
-
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-
-  .recommendationCard {
-    height: 220px;
-  }
-
+@media (min-width: 768px) {
   .cardContent {
     padding: 0.75rem;
+  }
+
+  .price {
+    font-size: 1rem !important;
   }
 
   .destinationCity {
     font-size: 1.1rem !important;
   }
 
-  .price {
-    font-size: 1rem !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .section {
-    padding: 1rem 0.75rem;
-  }
-
-  .sectionTitle {
-    font-size: 1.25rem !important;
-  }
-
-  .subsectionTitle {
-    display: none;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-
-  .recommendationCard {
-    height: 200px;
-  }
-
-  .cardContent {
-    padding: 0.5rem;
-  }
-
-  .destinationCity {
-    font-size: 1rem !important;
-  }
-
   .flightInfo {
-    font-size: 0.75rem !important;
+    font-size: 0.875rem !important;
   }
 
   .flightDetails {
-    font-size: 0.7rem !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cardContent {
+    padding: 1rem;
   }
 
   .price {
-    font-size: 0.9rem !important;
+    font-size: 1.25rem !important;
+  }
+
+  .destinationCity {
+    font-size: 1.5rem !important;
+  }
+
+  .flightInfo {
+    font-size: 0.875rem !important;
+  }
+
+  .flightDetails {
+    font-size: 0.8rem !important;
   }
 }
